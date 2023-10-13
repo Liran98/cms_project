@@ -206,7 +206,7 @@
         }
         header("Location: post_comments.php");
     }
-
+// comments page is in work
     ?>
 
 <?php include "./includes/admin_footer.php"; ?>
