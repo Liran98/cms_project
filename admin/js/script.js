@@ -92,7 +92,7 @@ $('.link').click(function (e) {
 // }
 
 const loadusersonline =  function () {
- fetch("index.php?onlineusers=result")
+ fetch("functions.php?onlineusers=result")
  .then(function(res){
   return res.json();
  })
@@ -107,4 +107,4 @@ setInterval(function () {
   loadusersonline();
 }, 500);
 
-//adding new changes soon
+//adding new changes soon 
