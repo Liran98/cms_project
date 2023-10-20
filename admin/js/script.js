@@ -99,29 +99,27 @@ const loadusersonline = function () {
     .then(function (data) {
       const all_users = document.querySelector('.usersonline');
       all_users.textContent = data;
-      console.log(data);
       return data;
     })
 }
 
-setInterval(function () {
-  loadusersonline();
-}, 500);
+
 
 
 const onlinePosts = function () {
-  fetch("functions.php?onlineposts=result")
+  fetch("index.php?onlineposts")
     .then(function(res) {
       return res.json();
     })
     .then(function(data) {
       const postonline = document.querySelector('.posts_online');
       postonline.textContent = data;
-      console.log(data);
       return data;
     })
 }
-setInterval(() => {
+
+setInterval(function () {
+  loadusersonline();
   onlinePosts();
 }, 500);
 

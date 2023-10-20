@@ -228,23 +228,5 @@ function find_all_categories()
 
         getusersonline();
 
-
-
-        function getonlinePosts(){
-            if(isset($_GET['onlineposts'])){
-                global $conn;
-
-                if(!$conn){
-                    include("../includes/db.php");
-
-                
-                $query = 'SELECT * FROM posts';
-                $res = mysqli_query($conn, $query);
-                $count_posts = mysqli_num_rows($res);
-                echo $count_posts;
-            }
-        }
-        }
-        getonlinePosts();
+     
             ?>
-

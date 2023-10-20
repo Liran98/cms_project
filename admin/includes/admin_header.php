@@ -1,10 +1,11 @@
 <!-- //from lecture 104 -->
-<?php session_start(); ?>
+
 <?php ob_start(); ?>
 
 <?php include "../includes/db.php"; ?>
 <?php include "functions.php"; ?>
 
+<?php session_start(); ?>
 
 <?php
 //?if theres no session started with role , then cannot access the admin page

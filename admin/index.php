@@ -19,8 +19,8 @@
                     </h1>
                 </div>
             </div>
-               <!-- /.row -->
-            
+            <!-- /.row -->
+
             <!-- /.row -->
 
             <div class="row">
@@ -32,9 +32,17 @@
                                     <i class="fa fa-file-text fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'>
-                                        <p class="posts_online"></p>
-                                       
+                                    <div class='huge '>
+                                        <span class="posts_online">
+                                        <?php
+    if (isset($_GET['onlineposts'])) {
+        $query = 'SELECT * FROM posts';
+        $res = mysqli_query($conn, $query);
+        $count_posts = mysqli_num_rows($res);
+        echo $count_posts;
+    }
+                                        ?>
+                                        </span>
                                     </div>
                                     <div>Posts</div>
                                 </div>
@@ -164,7 +172,7 @@
 
             $elements_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Categories', 'Users', 'Subscribers', 'Comments', 'Unapproved Comments'];
 
-       
+
             ?>
             <div class="row">
                 <script type="text/javascript">
@@ -194,7 +202,6 @@
 
                         chart.draw(data, google.charts.Bar.convertOptions(options));
                     }
-                    
                 </script>
 
                 <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
