@@ -91,20 +91,38 @@ $('.link').click(function (e) {
 //   });
 // }
 
-const loadusersonline =  function () {
- fetch("functions.php?onlineusers=result")
- .then(function(res){
-  return res.json();
- })
- .then(function(data){
-  const all_users = document.querySelector('.usersonline');
-  all_users.textContent =data;
-  return data;
- })
+const loadusersonline = function () {
+  fetch("functions.php?onlineusers=result")
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      const all_users = document.querySelector('.usersonline');
+      all_users.textContent = data;
+      console.log(data);
+      return data;
+    })
 }
 
 setInterval(function () {
   loadusersonline();
+}, 500);
+
+
+const onlinePosts = function () {
+  fetch("functions.php?onlineposts=result")
+    .then(function(res) {
+      return res.json();
+    })
+    .then(function(data) {
+      const postonline = document.querySelector('.posts_online');
+      postonline.textContent = data;
+      console.log(data);
+      return data;
+    })
+}
+setInterval(() => {
+  onlinePosts();
 }, 500);
 
 //adding new changes soon 

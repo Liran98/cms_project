@@ -27,18 +27,14 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col-xs-3">
                                     <i class="fa fa-file-text fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class='huge'>
-                                        <?php
-                                        $query = 'SELECT * FROM posts';
-                                        $res = mysqli_query($conn, $query);
-                                        $count_posts = mysqli_num_rows($res);
-                                        echo $count_posts;
-                                        ?>
+                                        <p class="posts_online"></p>
+                                       
                                     </div>
                                     <div>Posts</div>
                                 </div>
@@ -164,9 +160,11 @@
 
 
             <?php
-            $elements_count = [$count_posts, $count_post_pub, $count_post_draft, $count_categories, $count_user, $count_user_subs, $count_comment, $count_comment_unapproved];
+            $elements_count = ["", $count_post_pub, $count_post_draft, $count_categories, $count_user, $count_user_subs, $count_comment, $count_comment_unapproved];
 
             $elements_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Categories', 'Users', 'Subscribers', 'Comments', 'Unapproved Comments'];
+
+       
             ?>
             <div class="row">
                 <script type="text/javascript">
@@ -196,6 +194,7 @@
 
                         chart.draw(data, google.charts.Bar.convertOptions(options));
                     }
+                    
                 </script>
 
                 <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
