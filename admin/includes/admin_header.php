@@ -1,4 +1,4 @@
-//from lecture 104
+<!-- //from lecture 104 -->
 <?php session_start(); ?>
 <?php ob_start(); ?>
 

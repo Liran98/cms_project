@@ -92,7 +92,7 @@ $('.link').click(function (e) {
 // }
 
 const loadusersonline =  function () {
- fetch("functions.php?onlineusers=result")
+ fetch("index.php?onlineusers=result")
  .then(function(res){
   return res.json();
  })

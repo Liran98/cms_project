@@ -12,7 +12,7 @@
      <!-- Top Menu Items -->
      <ul class="nav navbar-right top-nav">
         <!-- //? $count_users coming from admin index.php  -->
-     <!-- <li><a href="">Users Online: <?php //echo $count_user; ?> </a></li> -->
+     <!-- <li><a href="">Users Online: <?php //echo $count_online; ?> </a></li> -->
      <li><a href="">Users Online: <span class="usersonline"></span></a></li>
          <li><a href="../index.php">🏠</a></li>
        

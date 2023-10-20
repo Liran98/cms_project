@@ -19,8 +19,8 @@
                     </h1>
                 </div>
             </div>
-            <!-- /.row -->
-
+               <!-- /.row -->
+            
             <!-- /.row -->
 
             <div class="row">

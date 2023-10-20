@@ -112,8 +112,8 @@ function find_all_categories()
                 $res = mysqli_query($conn, $query);
                 confirmQuery($res);
 
-            
-               $id = mysqli_insert_id($conn);
+
+                $id = mysqli_insert_id($conn);
 
                 echo "<div class='bg-success'>Post created: <a href='posts.php'>view all Posts</a> <a href='../post.php?p_id=$id'>check Post</a></div>";
             }
@@ -177,39 +177,39 @@ function find_all_categories()
 
 
 
-//We will get the current timestamp  with time() which will be always different, and we will calculate the $time_out variable. Then if we don't have the user with that session id in the database table, we will insert new record. But if we have it (meaning the user is still on the site, means only time_out value is updated, it's still the same user, so we will only update the existing record). So, we are getting the time out by subtracting from the current timestamp (which is always different, from second to second) let's say 60 seconds, so we are checking for a record based on the last sixty seconds, if it's not expired, meaning user should be still online.
+        //We will get the current timestamp  with time() which will be always different, and we will calculate the $time_out variable. Then if we don't have the user with that session id in the database table, we will insert new record. But if we have it (meaning the user is still on the site, means only time_out value is updated, it's still the same user, so we will only update the existing record). So, we are getting the time out by subtracting from the current timestamp (which is always different, from second to second) let's say 60 seconds, so we are checking for a record based on the last sixty seconds, if it's not expired, meaning user should be still online.
 
-// if($count == NULL) does that mean we do not have any result for user
+        // if($count == NULL) does that mean we do not have any result for user
 
-// - Yes, it means we do not have a result for that session id, either the record is old meaning if that's the case then that record is old.
+        // - Yes, it means we do not have a result for that session id, either the record is old meaning if that's the case then that record is old.
 
         function getusersonline()
         {
             if (isset($_GET['onlineusers'])) {
                 global $conn;
-        
+
                 if (!$conn) {
                     session_start();
                     include("../includes/db.php");
-                
+
                     $session = session_id();
                     $time = time();
-                    $timeout = $time - 10; 
+                    $timeout = $time - 10;
 
                     //? checking if theres any users online 
-$query = "SELECT * FROM users_online WHERE session = '$session'";
+                    $query = "SELECT * FROM users_online WHERE session = '$session'";
 
                     $res = mysqli_query($conn, $query);
                     $count = mysqli_num_rows($res);
- 
+
                     //? if no users detected then insert new session id to table
-                    if(!$count || $count == NULL){
-        mysqli_query($conn, "INSERT INTO users_online (session,time) VALUES('$session','$time')");
-                    }else{
-                     //? if theres a session then update thier time 
-mysqli_query($conn,"UPDATE users_online SET time = '$time' WHERE session = '$session'");
+                    if (!$count || $count == NULL) {
+                        mysqli_query($conn, "INSERT INTO users_online (session,time) VALUES('$session','$time')");
+                    } else {
+                        //? if theres a session then update thier time 
+                        mysqli_query($conn, "UPDATE users_online SET time = '$time' WHERE session = '$session'");
                     }
-                    
+
                     //? where time > timeout
                     //? user logged out at time = 180 and $timeout = 180 - 10;
                     //? time will keep updating the timeout til it reaches the time
@@ -218,17 +218,14 @@ mysqli_query($conn,"UPDATE users_online SET time = '$time' WHERE session = '$ses
                     //? starts time from 170,171,172,173,174,175,176,177,178,179,180
                     //? and then user appears offline
 
-    $users_online_query = mysqli_query($conn,"SELECT * FROM users_online WHERE time > '$timeout'");
+                    $users_online_query = mysqli_query($conn, "SELECT * FROM users_online WHERE time > '$timeout'");
 
                     $count_online = mysqli_num_rows($users_online_query);
                     echo $count_online;
-
-                  
                 }
-           
             }
         }
-        
+
         getusersonline();
 
 
