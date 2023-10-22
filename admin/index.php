@@ -35,12 +35,10 @@
                                     <div class='huge '>
                                         <span class="posts_online">
                                         <?php
-    if (isset($_GET['onlineposts'])) {
         $query = 'SELECT * FROM posts';
         $res = mysqli_query($conn, $query);
         $count_posts = mysqli_num_rows($res);
         echo $count_posts;
-    }
                                         ?>
                                         </span>
                                     </div>
