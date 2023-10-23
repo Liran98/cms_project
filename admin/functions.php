@@ -90,7 +90,7 @@ function find_all_categories()
 
             if (isset($_POST['create_post'])) {
                 $post_title = $_POST['title'];
-                $post_author = $_POST['author'];
+                $post_user = $_POST['user'];
                 $post_category_id = $_POST['post_category']; //select 
                 $post_status = strtolower($_POST['post_status']);
 
@@ -105,9 +105,9 @@ function find_all_categories()
                 move_uploaded_file($post_image_temp, "../images/$post_image");
 
 
-                $query = "INSERT INTO posts(post_title,post_category_id,post_author,
+                $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_user,
     post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_views_count)";
-                $query .= " VALUES ('$post_title',$post_category_id,'$post_author',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
+                $query .= " VALUES ($post_category_id,'$post_title','$post_user','$post_user',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
 
                 $res = mysqli_query($conn, $query);
                 confirmQuery($res);

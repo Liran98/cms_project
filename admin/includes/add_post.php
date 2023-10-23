@@ -35,9 +35,24 @@ Add_Post();
          </div>
 
          <div class="form-group">
-             <label for="title">Post Author</label>
-             <input type="text" class="form-control" name="author" />
+             <label for="Users">Users</label>
+             <select name="user" id="">
+                <?php
+                $query = "SELECT * FROM users";
+                $res = mysqli_query($conn,$query);
+
+                while($row=mysqli_fetch_assoc($res)){
+                    $user = $row['user_name'];
+                    $id = $row['user_id'];
+                    echo "<option value='$user'>$user</option>";
+                }
+                
+                ?>
+             </select>
          </div>
+
+
+
 
          <div class="form-group">
              <label for="post_status">Post Status</label>

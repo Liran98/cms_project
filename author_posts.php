@@ -21,13 +21,13 @@
                 $author = $_GET['auth_name'];
                 $id = $_GET['p_id'];
 
-                $query = "SELECT * FROM posts WHERE post_author = '$author'";
+                $query = "SELECT * FROM posts WHERE post_user = '$author'";
 
                 $res = mysqli_query($conn, $query);
 
                 while ($row = mysqli_fetch_assoc($res)) {
                     $post_title = $row['post_title'];
-                    $post_author = $row['post_author'];
+                    $post_author = $row['post_user'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = $row['post_content'];

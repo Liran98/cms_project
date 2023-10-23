@@ -73,7 +73,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                  <tr>
                      <th><input id="selectAllBoxes" type="checkbox"></th>
                      <th>id</th>
-                     <th>Author</th>
+                     <th>users</th>
                      <th>title</th>
                      <th>category</th>
                      <th>status</th>
@@ -97,6 +97,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                  
                     while ($row = mysqli_fetch_assoc($res)) {
                         $id = $row['post_id'];
+                        $post_user = $row['post_user'];
                         $author = $row['post_author'];
                         $title = $row['post_title'];
                         //id
@@ -120,7 +121,20 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <td><input class="checkBoxes" name="checkboxArray[]" value="<?php echo $id; ?>" type="checkbox"></td>
 
                          <td><?php echo $id; ?></td>
-                         <td><?php echo $author; ?></td>
+
+<?php 
+        if(!empty($author)){
+            echo "<td> $author </td>";
+
+        }elseif(!empty($post_user)){
+            echo "<td> $post_user </td>";
+
+        }
+
+?>
+                         
+
+
                          <td><?php echo $title; ?></td>
 
                          <?php
