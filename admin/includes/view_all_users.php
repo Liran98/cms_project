@@ -43,8 +43,8 @@
                  <td><?php echo $email; ?></td>
                  <td><?php echo "<img class='img-responsive' src='../images/$img' />"; ?></td>
                  <td><?php echo $role; ?></td>
-<td><a href="users.php?admin=<?php echo $id; ?>">ADMIN</a></td>
-<td><a href="users.php?subscriber=<?php echo $id; ?>">SUBSCRIBER</a></td>
+                 <td><a href="users.php?admin=<?php echo $id; ?>">ADMIN</a></td>
+                 <td><a href="users.php?subscriber=<?php echo $id; ?>">SUBSCRIBER</a></td>
                  <td><a href="users.php?delete=<?php echo $id; ?>">🗑️</a></td>
                  <td><a href="users.php?source=edit_user&user_id=<?php echo $id; ?>">📝</a></td>
 
@@ -60,37 +60,43 @@
  <?php
 
     if (isset($_GET['delete'])) {
-        $id = $_GET['delete'];
 
-        $query = "DELETE FROM users WHERE user_id = $id";
+        if (isset($_SESSION['user_role'])) {
 
-        $res = mysqli_query($conn, $query);
+            if ($_SESSION['user_role'] == 'admin') {
 
-        if (!$res) {
-            die(mysqli_error($conn));
+                $id = mysqli_real_escape_string($conn,$_GET['delete']);
+
+                $query = "DELETE FROM users WHERE user_id = $id";
+
+                $res = mysqli_query($conn, $query);
+
+                if (!$res) {
+                    die(mysqli_error($conn));
+                }
+
+                header("Location: users.php");
+            }
         }
+    }
 
+
+    ?>
+
+ <?php
+    if (isset($_GET['admin'])) {
+        $user_id = $_GET['admin'];
+        $query = "UPDATE users SET user_role = 'admin' WHERE user_id = $user_id";
+        $res = mysqli_query($conn, $query);
         header("Location: users.php");
     }
-
-
-
     ?>
 
-    <?php
-    if(isset($_GET['admin'])){
-    $user_id = $_GET['admin'];
-    $query = "UPDATE users SET user_role = 'admin' WHERE user_id = $user_id";
-    $res = mysqli_query($conn, $query);
-    header("Location: users.php");
-    }
-    ?>
-
-<?php
-    if(isset($_GET['subscriber'])){
-    $user_id = $_GET['subscriber'];
-    $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = $user_id";
-    $res = mysqli_query($conn, $query);
-    header("Location: users.php");
+ <?php
+    if (isset($_GET['subscriber'])) {
+        $user_id = $_GET['subscriber'];
+        $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = $user_id";
+        $res = mysqli_query($conn, $query);
+        header("Location: users.php");
     }
     ?>
