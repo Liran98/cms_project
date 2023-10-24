@@ -3,4 +3,7 @@
                                 //*PASSWORD_DEFAULT
 echo password_hash('thepassword',PASSWORD_BCRYPT, array('cost'=> 12));
 
+
+
+
 ?>

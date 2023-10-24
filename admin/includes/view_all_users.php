@@ -56,11 +56,8 @@
      </tbody>
  </table>
 
-
  <?php
-
     if (isset($_GET['delete'])) {
-
         if (isset($_SESSION['user_role'])) {
 
             if ($_SESSION['user_role'] == 'admin') {

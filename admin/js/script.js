@@ -52,20 +52,8 @@ $('.link').click(function (e) {
     cancelButtonColor: '#d33',
     confirmButtonColor: '#ff1',
     confirmButtonText: `<a style='text-decoration:none' class='link' href='posts.php?delete=${id}'>yes delete it</a>`,
-
-
   });
 });
-
-
-
-
-
-
-
-
-
-
 
 // const mainbox = document.getElementById('selectAllBoxes');
 // const otherboxes = document.querySelector('.checkBoxes');
@@ -102,9 +90,6 @@ const loadusersonline = function () {
       return data;
     })
 }
-
-
-
 
 const onlinePosts = function () {
   fetch("index.php?onlineposts")

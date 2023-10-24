@@ -90,6 +90,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                  <?php
                     $query = "SELECT * FROM posts ORDER BY post_id DESC";
                     $res = mysqli_query($conn, $query);
+                    
                     //  if(!$res){
                     //      die("query failed" . mysqli_error($conn));
                     //  }
