@@ -30,18 +30,33 @@
     <div class="well">
 
         <?php
-        $query = 'SELECT * FROM categories LIMIT 3';
+        $cate_query = mysqli_query($conn,"SELECT * FROM categories");
+        $cate_count = mysqli_num_rows($cate_query);
+        $Allpages = floor(ceil($cate_count / 5));
 
+        if(isset($_GET['dapage'])){
+            $page = $_GET['dapage'];
+        }else{
+            $page = "";
+        }
+
+        if($page == 1 || $page == ""){
+            $curpage = 0;
+        }else{
+            $curpage = ($page * 5) - 5;
+        }
+
+        $query = "SELECT * FROM categories LIMIT $curpage,5";
+    
         $res = mysqli_query($conn, $query);
 
         if (!$res) {
-            die("query failed");
+            die(mysqli_error($conn));
         }
-
+    
+       
 
         ?>
-
-
 
 
         <h4>Blog Categories</h4>
@@ -61,9 +76,18 @@
             <!-- /.col-lg-6 -->
 
             <!-- /.col-lg-6 -->
-
-
-
+            <ul class="pager">
+<?php
+ for ($i = 1; $i <= $Allpages; $i++){
+    if($i == 1 && $page == "" || $page == $i){
+        echo "<li ><a class='bg-dark' href='index.php?dapage=$i'>$i</a></li>";
+    }else{
+        echo "<li><a href='index.php?dapage=$i'>$i</a></li>";
+    }
+            
+        }
+?>
+</ul>
         </div>
 
 

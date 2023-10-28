@@ -86,10 +86,8 @@ function find_all_categories()
         {
             global $conn;
 
-
-
             if (isset($_POST['create_post'])) {
-                $post_title = $_POST['title'];
+                $post_title = escape($_POST['title']);
                 $post_user = $_POST['user'];
                 $post_category_id = $_POST['post_category']; //select 
                 $post_status = strtolower($_POST['post_status']);
@@ -171,12 +169,6 @@ function find_all_categories()
             }
         }
 
-
-
-
-
-
-
         //We will get the current timestamp  with time() which will be always different, and we will calculate the $time_out variable. Then if we don't have the user with that session id in the database table, we will insert new record. But if we have it (meaning the user is still on the site, means only time_out value is updated, it's still the same user, so we will only update the existing record). So, we are getting the time out by subtracting from the current timestamp (which is always different, from second to second) let's say 60 seconds, so we are checking for a record based on the last sixty seconds, if it's not expired, meaning user should be still online.
 
         // if($count == NULL) does that mean we do not have any result for user
@@ -228,5 +220,10 @@ function find_all_categories()
 
         getusersonline();
 
+        function escape($string){
+            global $conn;
+            // trim(strip_tags($string));
+       return mysqli_real_escape_string($conn,trim($string));
+        }
      
             ?>

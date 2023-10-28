@@ -18,7 +18,7 @@
                 <?php
 
 
-                $query = 'SELECT * FROM categories';
+                $query = 'SELECT * FROM categories LIMIT 1';
 
                 $res = mysqli_query($conn, $query);
 

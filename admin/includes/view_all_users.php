@@ -10,9 +10,6 @@
              <th>role</th>
              <th>admin</th>
              <th>subscriber</th>
-
-
-
          </tr>
      </thead>
      <tbody>
@@ -32,8 +29,6 @@
                 $email = $row['user_email'];
                 $img = $row['user_image'];
                 $role = $row['user_role'];
-
-
             ?>
              <tr>
                  <td><?php echo $id; ?></td>
