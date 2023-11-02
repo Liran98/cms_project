@@ -53,11 +53,7 @@
         if (!$res) {
             die(mysqli_error($conn));
         }
-    
-       
-
         ?>
-
 
         <h4>Blog Categories</h4>
         <div class="row">
