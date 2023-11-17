@@ -61,7 +61,7 @@ if(!isset($_SESSION['username'])){
 
                 ?>
 
-
+<li><a href='contact.php'>Contact</a></li>
 
 
 
