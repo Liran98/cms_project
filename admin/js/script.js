@@ -4,8 +4,6 @@ $(document).ready(function () {
   });
 });
 
-
-
 $(document).ready(function () {
   $('#selectAllBoxes').click(function (e) {
     if (this.checked) {
@@ -24,14 +22,6 @@ $(document).ready(function () {
   $("#load-screen").delay(300).fadeOut(200, function () {
     $(this).remove();
   })
-
-
-
-
-
-
-
-
 });
 
 

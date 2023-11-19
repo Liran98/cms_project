@@ -8,14 +8,11 @@
 
 <?php
 if (isset($_POST['submit'])) {
-
 $to = "lirankhalil61@gmail.com";
 $user = $_POST['username'];
 $email = $_POST['email'];
 $txtarea = $_POST['txtbody'];
 $subject = $_POST['subject'];
-
-
 mail($to,$subject,$txtarea,$email); 
 
 }
