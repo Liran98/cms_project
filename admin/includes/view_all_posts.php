@@ -156,8 +156,9 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <td><a href="./post_comments.php?id=<?php echo $id; ?>"><?php echo $comment_count; ?></a></td>
                          <td><?php echo $date; ?></td>
                          <td><a href="posts.php?reset_views=<?php echo $id; ?>"><?php echo $view; ?>👁️‍🗨️</a></td>
-
-
+                       
+                         <!-- you can use rel on <a></a> then call it with javascript -->
+                          <!-- <a rel="post_id" href=""></a> -->
 
                          <td><a data-get="<?php echo $id; ?>" class="link">🗑️</a></td>
 
@@ -209,3 +210,23 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
         header("Location: posts.php");
     }
     ?>
+
+<!-- <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->

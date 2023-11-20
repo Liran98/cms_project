@@ -93,10 +93,10 @@ const loadusersonline = function () {
 
 const onlinePosts = function () {
   fetch("index.php?onlineposts")
-    .then(function(res) {
+    .then(function (res) {
       return res.json();
     })
-    .then(function(data) {
+    .then(function (data) {
       const postonline = document.querySelector('.posts_online');
       postonline.textContent = data;
       return data;
@@ -109,3 +109,11 @@ setInterval(function () {
 }, 500);
 
 //adding new changes soon 
+
+//deleting posts with modal
+$(document).ready(function () {
+  $(".delete_link").on('click', function () {
+    const id = $(this).attr("rel");
+    alert(id);
+  });
+});
