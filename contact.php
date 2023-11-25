@@ -11,9 +11,14 @@ if (isset($_POST['submit'])) {
 $to = "lirankhalil61@gmail.com";
 $user = $_POST['username'];
 $email = $_POST['email'];
-$txtarea = $_POST['txtbody'];
+$msg = $_POST['txtbody'];
 $subject = $_POST['subject'];
-mail($to,$subject,$txtarea,$email); 
+
+$headers = 'From: {$email}' . "\r\n" .
+'Reply-To: {$to}' . "\r\n" .
+'X-Mailer: PHP/' . phpversion();
+
+mail($to,$subject,$msg,$headers); 
 
 }
 

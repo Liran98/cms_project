@@ -110,8 +110,7 @@ function find_all_categories()
                 $res = mysqli_query($conn, $query);
                 confirmQuery($res);
 
-
-                $id = mysqli_insert_id($conn);
+                $id = mysqli_insert_id($conn); //gets the id of the new post
 
                 echo "<div class='bg-success'>Post created: <a href='posts.php'>view all Posts</a> <a href='../post.php?p_id=$id'>check Post</a></div>";
             }
@@ -184,8 +183,8 @@ function find_all_categories()
                     session_start();
                     include("../includes/db.php");
 
-                    $session = session_id();
-                    $time = time();
+                    $session = session_id(); //get the current session id
+                    $time = time(); // sets current timestamp
                     $timeout = $time - 10;
 
                     //? checking if theres any users online 
