@@ -134,6 +134,7 @@ function find_all_categories()
 
                 $username = $_POST['username'];
                 $password = $_POST['password'];
+                $password = password_hash($password,PASSWORD_BCRYPT,array('cost'=>12));
 
                 $fname = $_POST['firstname'];
                 $lname = $_POST['lastname'];
