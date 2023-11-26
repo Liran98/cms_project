@@ -1,9 +1,7 @@
 <?php include "includes/db.php"; ?>
 <?php include "includes/header.php"; ?>
 
-
 <!-- Navigation -->
-
 <?php include "includes/navigation.php"; ?>
 
 <?php
@@ -14,11 +12,9 @@ $email = $_POST['email'];
 $msg = $_POST['txtbody'];
 $subject = $_POST['subject'];
 
-$headers = 'From: {$email}' . "\r\n" .
-'Reply-To: {$to}' . "\r\n" .
-'X-Mailer: PHP/' . phpversion();
 
-mail($to,$subject,$msg,$headers); 
+
+mail($to,$subject,$msg,$email); 
 
 }
 
