@@ -12,9 +12,14 @@ $email = $_POST['email'];
 $msg = $_POST['txtbody'];
 $subject = $_POST['subject'];
 
+$headers = array(
+    'From' => $email,
+    'Reply-To' => $to,
+    
+);
 
 
-mail($to,$subject,$msg,$email); 
+mail($to,$subject,$msg,$headers); 
 
 }
 

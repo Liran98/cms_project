@@ -25,25 +25,25 @@ $(document).ready(function () {
 });
 
 
-$('.link').click(function (e) {
+// $('.link').click(function (e) {
 
-  const btn = e.target.closest('.link');
-  const id = btn.dataset.get;
+//   const btn = e.target.closest('.del_link');
+//   const id = btn.dataset.get;
 
-  console.log(id);
-  console.log(btn);
+//   console.log(id);
+//   console.log(btn);
 
-  Swal.fire({
+//   Swal.fire({
 
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    cancelButtonColor: '#d33',
-    confirmButtonColor: '#ff1',
-    confirmButtonText: `<a style='text-decoration:none' class='link' href='posts.php?delete=${id}'>yes delete it</a>`,
-  });
-});
+//     title: 'Are you sure?',
+//     text: "You won't be able to revert this!",
+//     icon: 'warning',
+//     showCancelButton: true,
+//     cancelButtonColor: '#d33',
+//     confirmButtonColor: '#ff1',
+//     confirmButtonText: `<a style='text-decoration:none' class='link' href='posts.php?delete=${id}'>yes delete it</a>`,
+//   });
+// });
 
 // const mainbox = document.getElementById('selectAllBoxes');
 // const otherboxes = document.querySelector('.checkBoxes');
@@ -102,8 +102,13 @@ setInterval(function () {
 
 //deleting posts with modal
 $(document).ready(function () {
-  $(".delete_link").on('click', function () {
-    const id = $(this).attr("rel");
-    alert(id);
+  $(".del_link").on('click', function (e) {
+
+    const btn = e.target.closest('.del_link');
+   
+
+
   });
 });
+
+
