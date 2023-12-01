@@ -101,14 +101,20 @@ setInterval(function () {
 //adding new changes soon 
 
 //deleting posts with modal
+
 $(document).ready(function () {
-  $(".del_link").on('click', function (e) {
+  $(".del_link").on('click', function () {
 
-    const btn = e.target.closest('.del_link');
-   
+    // const btn = e.target.closest('.del_link');
+  //  const id = btn.dataset.get;
 
+const id = $(this).attr("rel"); //? whats coming from the icon 
+
+const del_url = `posts.php?delete=${id}`; //? setting the id which coming from the post
+    
+$(".modal_delete_link").attr("href",del_url);//? setting the href with the del_url
+
+$('#myModal').modal('show'); //? showing the modal
 
   });
 });
-
-
