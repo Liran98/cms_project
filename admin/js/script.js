@@ -118,10 +118,17 @@ setInterval(function () {
 // });
 
 
- const btn = document.querySelector('.del_link');
+ const thebtn = document.querySelector('.del_link');
+ const modal = document.getElementById('myModal');
+ const delLink = document.querySelector('.modal_delete_link');
 
- btn.addEventListener('click',function(e){
+ thebtn.addEventListener('click',function(e){
  const btn = e.target.closest('.del_link');
  const id = btn.dataset.get;
- alert(id);
- })
+
+ delLink.attributes("href",id);
+
+modal.classList.remove('hidden');
+ 
+
+ });
