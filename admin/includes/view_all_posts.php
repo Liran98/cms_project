@@ -2,7 +2,7 @@
     //? check box array is the checkbox input , "<input name="checkboxArray[]" 
     //? getting the id of the post from the checkbox input value="<?php echo $id;"
     //? and could edit or delete more than one post at a time 
-    include "includes/delete_modal.php";
+    // include "includes/delete_modal.php";
 
     if (isset($_POST['checkboxArray'])) {
         $select = $_POST['post_selection'];
@@ -159,7 +159,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <!-- you can use rel on <a></a> then call it with javascript -->
                          <!-- <a rel="post_id" href=""></a> -->
 
-                         <td><a  data-get="<?php echo $id; ?>" class="del_link">🗑️</a></td>
+                         <td><a  data-get="<?php echo $id;?>" class="del_link">🗑️</a></td>
 
                          <td><a href="posts.php?source=edit_post&p_id=<?php echo $id; ?>">📝</a></td>
 

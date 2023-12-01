@@ -25,25 +25,25 @@ $(document).ready(function () {
 });
 
 //////////////////////////////////////////////////////////////
-// $('.del_link').click(function (e) {
+$('.del_link').click(function (e) {
 
-//   const btn = e.target.closest('.del_link');
-//   const id = btn.dataset.get;
+  const btn = e.target.closest('.del_link');
+  const id = btn.dataset.get;
 
-//   console.log(id);
-//   console.log(btn);
+  console.log(id);
+  console.log(btn);
 
-//   Swal.fire({
+  Swal.fire({
 
-//     title: 'Are you sure?',
-//     text: "You won't be able to revert this!",
-//     icon: 'warning',
-//     showCancelButton: true,
-//     cancelButtonColor: '#d33',
-//     confirmButtonColor: '#ff1',
-//     confirmButtonText: `<a style='text-decoration:none' class='link' href='posts.php?delete=${id}'>yes delete it</a>`,
-//   });
-// });
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    cancelButtonColor: '#d33',
+    confirmButtonColor: '#ff1',
+    confirmButtonText: `<a style='text-decoration:none' class='link' href='posts.php?delete=${id}'>yes delete it</a>`,
+  });
+});
 /////////////////////////////////////////////////////////////////////
 // const mainbox = document.getElementById('selectAllBoxes');
 // const otherboxes = document.querySelector('.checkBoxes');
@@ -81,21 +81,21 @@ const loadusersonline = function () {
     })
 }
 
-const onlinePosts = function () {
-  fetch("index.php?onlineposts")
-    .then(function (res) {
-      return res.json();
-    })
-    .then(function (data) {
-      const postonline = document.querySelector('.posts_online');
-      postonline.textContent = data;
-      return data;
-    })
-}
+// const onlinePosts = function () {
+//   fetch("index.php?onlineposts")
+//     .then(function (res) {
+//       return res.json();
+//     })
+//     .then(function (data) {
+//       const postonline = document.querySelector('.posts_online');
+//       postonline.textContent = data;
+//       return data;
+//     })
+// }
 
 setInterval(function () {
   loadusersonline();
-  onlinePosts();
+  // onlinePosts();
 }, 500);
 
 //adding new changes soon 
@@ -109,7 +109,7 @@ setInterval(function () {
 // const id = $(this).attr("rel"); //? whats coming from the icon 
 
 // const del_url = `posts.php?delete=${id}`; //? setting the id which coming from the post
-    
+
 // $(".modal_delete_link").attr("href",del_url);//? setting the href with the del_url
 
 // $('#myModal').modal('show'); //? showing the modal
@@ -118,17 +118,13 @@ setInterval(function () {
 // });
 
 
- const thebtn = document.querySelector('.del_link');
- const modal = document.getElementById('myModal');
- const delLink = document.querySelector('.modal_delete_link');
+// const thebtn = document.querySelector('.del_link');
+// const modal = document.getElementById('myModal');
+// const delLink = document.querySelector('.modal_delete_link');
 
- thebtn.addEventListener('click',function(e){
- const btn = e.target.closest('.del_link');
- const id = btn.dataset.get;
+// thebtn.addEventListener('click', function (e) {
+//   const btn = e.target.closest('.del_link');
+//   const id = btn.dataset.get;
 
- delLink.attributes("href",id);
 
-modal.classList.remove('hidden');
- 
-
- });
+// });
