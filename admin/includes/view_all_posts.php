@@ -1,13 +1,9 @@
- 
- 
- 
- 
  <?php
     //? check box array is the checkbox input , "<input name="checkboxArray[]" 
     //? getting the id of the post from the checkbox input value="<?php echo $id;"
     //? and could edit or delete more than one post at a time 
     include "includes/delete_modal.php";
-    
+
     if (isset($_POST['checkboxArray'])) {
         $select = $_POST['post_selection'];
         $box = $_POST['checkboxArray'];
@@ -47,7 +43,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                     $query .= " VALUES ('$post_title',$post_category_id,'$post_author',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
 
                     $res = mysqli_query($conn, $query);
-                    if(!$res){
+                    if (!$res) {
                         die(mysqli_error($conn));
                     }
                     break;
@@ -95,12 +91,12 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                  <?php
                     $query = "SELECT * FROM posts ORDER BY post_id DESC";
                     $res = mysqli_query($conn, $query);
-                    
+
                     //  if(!$res){
                     //      die("query failed" . mysqli_error($conn));
                     //  }
 
-                 
+
                     while ($row = mysqli_fetch_assoc($res)) {
                         $id = $row['post_id'];
                         $post_user = $row['post_user'];
@@ -114,7 +110,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                         $comments = $row['post_comment_count'];
                         $date = $row['post_date'];
                         $view = $row['post_views_count'];
-                        
+
 
                         $comment_count_query = mysqli_query($conn, "SELECT * FROM comments WHERE comment_post_id = $id");
 
@@ -128,17 +124,15 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
                          <td><?php echo $id; ?></td>
 
-<?php 
-        if(!empty($author)){
-            echo "<td> $author </td>";
+                         <?php
+                            if (!empty($author)) {
+                                echo "<td> $author </td>";
+                            } elseif (!empty($post_user)) {
+                                echo "<td> $post_user </td>";
+                            }
 
-        }elseif(!empty($post_user)){
-            echo "<td> $post_user </td>";
+                            ?>
 
-        }
-
-?>
-                         
 
 
                          <td><?php echo $title; ?></td>
@@ -161,11 +155,11 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <td><a href="./post_comments.php?id=<?php echo $id; ?>"><?php echo $comment_count; ?></a></td>
                          <td><?php echo $date; ?></td>
                          <td><a href="posts.php?reset_views=<?php echo $id; ?>"><?php echo $view; ?>👁️‍🗨️</a></td>
-                       
-                         <!-- you can use rel on <a></a> then call it with javascript -->
-                          <!-- <a rel="post_id" href=""></a> -->
 
-                         <td><a rel="<?php echo $id; ?>" data-get="<?php echo $id; ?>" class="del_link">🗑️</a></td>
+                         <!-- you can use rel on <a></a> then call it with javascript -->
+                         <!-- <a rel="post_id" href=""></a> -->
+
+                         <td><a  data-get="<?php echo $id; ?>" class="del_link">🗑️</a></td>
 
                          <td><a href="posts.php?source=edit_post&p_id=<?php echo $id; ?>">📝</a></td>
 
@@ -215,4 +209,3 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
         header("Location: posts.php");
     }
     ?>
-

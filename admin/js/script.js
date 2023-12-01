@@ -24,8 +24,8 @@ $(document).ready(function () {
   })
 });
 
-
-// $('.link').click(function (e) {
+//////////////////////////////////////////////////////////////
+// $('.del_link').click(function (e) {
 
 //   const btn = e.target.closest('.del_link');
 //   const id = btn.dataset.get;
@@ -44,7 +44,7 @@ $(document).ready(function () {
 //     confirmButtonText: `<a style='text-decoration:none' class='link' href='posts.php?delete=${id}'>yes delete it</a>`,
 //   });
 // });
-
+/////////////////////////////////////////////////////////////////////
 // const mainbox = document.getElementById('selectAllBoxes');
 // const otherboxes = document.querySelector('.checkBoxes');
 
@@ -102,19 +102,26 @@ setInterval(function () {
 
 //deleting posts with modal
 
-$(document).ready(function () {
-  $(".del_link").on('click', function () {
+// $(document).ready(function () {
+//   $(".del_link").on('click', function () {
+//   //   const btn = e.target.closest('.del_link');
+//   //  const id = btn.dataset.get;
+// const id = $(this).attr("rel"); //? whats coming from the icon 
 
-    // const btn = e.target.closest('.del_link');
-  //  const id = btn.dataset.get;
-
-const id = $(this).attr("rel"); //? whats coming from the icon 
-
-const del_url = `posts.php?delete=${id}`; //? setting the id which coming from the post
+// const del_url = `posts.php?delete=${id}`; //? setting the id which coming from the post
     
-$(".modal_delete_link").attr("href",del_url);//? setting the href with the del_url
+// $(".modal_delete_link").attr("href",del_url);//? setting the href with the del_url
 
-$('#myModal').modal('show'); //? showing the modal
+// $('#myModal').modal('show'); //? showing the modal
 
-  });
-});
+//   });
+// });
+
+
+ const btn = document.querySelector('.del_link');
+
+ btn.addEventListener('click',function(e){
+ const btn = e.target.closest('.del_link');
+ const id = btn.dataset.get;
+ alert(id);
+ })
