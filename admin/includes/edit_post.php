@@ -31,7 +31,7 @@ if(isset($_POST['update_post'])){
     $query .="post_category_id = '{$category}', ";
     $query .="post_date = now(), ";
     $query .="post_author = '{$post_user}', ";
-    $query .="post_user = '', ";
+    $query .="post_user = '$loguser', ";
     $query .="post_status = '{$status}', ";
     $query .="post_tags = '{$tags}', ";
     $query .="post_content = '{$content}', ";

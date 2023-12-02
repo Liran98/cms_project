@@ -38,10 +38,10 @@
                         $post_tags = $row['post_tags'];
                         $post_content = $row['post_content'];
                     }
-                    $loguser = $_SESSION['username'];
+                    $loggedUser = $_SESSION['username'];
                     $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_user,
 post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_views_count)";
-                    $query .= " VALUES ($post_category_id,'$post_title','$post_author','$loguser',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
+                    $query .= " VALUES ($post_category_id,'$post_title','$post_author','$loggedUser',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
 
                     $res = mysqli_query($conn, $query);
                     if (!$res) {
@@ -128,7 +128,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <?php
                             if (!empty($author)) {
                                 echo "<td> $author </td>";
-                            } elseif (!empty($post_user)) {
+                            } else if (!empty($post_user)) {
                                 echo "<td> $post_user </td>";
                             }
 
@@ -201,9 +201,6 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
         header("Location: posts.php");
     }
-
-
-
     ?>
 
  <?php
