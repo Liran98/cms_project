@@ -25,11 +25,13 @@ if(isset($_POST['update_post'])){
         
     }
     }  
+    $loguser = $_SESSION['username'];
     $query = "UPDATE posts SET ";
     $query .="post_title = '{$title}', ";
     $query .="post_category_id = '{$category}', ";
     $query .="post_date = now(), ";
     $query .="post_author = '{$post_user}', ";
+    $query .="post_user = '', ";
     $query .="post_status = '{$status}', ";
     $query .="post_tags = '{$tags}', ";
     $query .="post_content = '{$content}', ";

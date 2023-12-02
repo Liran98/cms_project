@@ -38,9 +38,10 @@
                         $post_tags = $row['post_tags'];
                         $post_content = $row['post_content'];
                     }
-                    $query = "INSERT INTO posts(post_title,post_category_id,post_author,
+                    $loguser = $_SESSION['username'];
+                    $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_user,
 post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_views_count)";
-                    $query .= " VALUES ('$post_title',$post_category_id,'$post_author',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
+                    $query .= " VALUES ($post_category_id,'$post_title','$post_author','$loguser',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
 
                     $res = mysqli_query($conn, $query);
                     if (!$res) {
@@ -112,10 +113,10 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                         $view = $row['post_views_count'];
 
 
+
+
+
                         $comment_count_query = mysqli_query($conn, "SELECT * FROM comments WHERE comment_post_id = $id");
-
-
-
                         $comment_count = mysqli_num_rows($comment_count_query);
                     ?>
                      <tr>
@@ -146,9 +147,13 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
                                 $cat_title = $row['cat_title'];
                             }
+                            if(empty($cat_title)) {
+                                echo "<td>please edit your post 
+                                <a href='posts.php?source=edit_post&p_id=$id'>📝</a></td>";
+                            }else{
+                                echo "<td>$cat_title</td>";
+                            }
                             ?>
-                         <td><?php echo $cat_title; ?></td>
-
                          <td><?php echo $status; ?></td>
                          <td><?php echo "<a href='../post.php?p_id=$id'><img class='img-responsive' src='../images/$img' /></a>"; ?></td>
                          <td><?php echo $tags; ?></td>
@@ -159,7 +164,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <!-- you can use rel on <a></a> then call it with javascript -->
                          <!-- <a rel="post_id" href=""></a> -->
 
-                         <td><a  data-get="<?php echo $id;?>" class="del_link">🗑️</a></td>
+                         <td><a data-get="<?php echo $id; ?>" class="del_link">🗑️</a></td>
 
                          <td><a href="posts.php?source=edit_post&p_id=<?php echo $id; ?>">📝</a></td>
 

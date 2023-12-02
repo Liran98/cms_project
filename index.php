@@ -14,7 +14,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <?php
-            $query = "SELECT * FROM posts";
+            $query = "SELECT * FROM posts WHERE post_status = 'published'";
             $res = mysqli_query($conn, $query);
             $page_count = mysqli_num_rows($res);
 
@@ -38,7 +38,7 @@
 
             $res = mysqli_query($conn, $query);
             $count = mysqli_num_rows($res);
-            if ($count === 0) {
+            if ($count === 0 || $count < 1) {
                 echo "<h1 class='text-center'>no posts found add one maybe?</h1>";
             }
 
@@ -50,6 +50,7 @@
                 $post_user = $row['post_user'];
                 $post_date = $row['post_date'];
                 $post_image = $row['post_image'];
+                $post_status = $row['post_status'];
                 $post_content = substr($row['post_content'], 0, 250);
 
             ?>
@@ -97,11 +98,7 @@
             echo "<li><a href='index.php?page=$i'>$i</a></li>";
         }
     }
-
-
     ?>
-
-
 </ul>
 
 

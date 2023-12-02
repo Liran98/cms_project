@@ -14,10 +14,16 @@
             <?php
             if(isset($_GET['category'])){
                 $category_id = $_GET['category'];
-            }
-            $query = "SELECT * FROM posts WHERE post_category_id =$category_id";
+            
+            $query = "SELECT * FROM posts WHERE post_category_id =$category_id AND post_status = 'published";
             $res = mysqli_query($conn,$query);
             
+if(mysqli_num_rows($res) < 1 ){
+echo "<h1 class='text-center'>no categories found</h1>";
+}else{
+
+
+
             while($row = mysqli_fetch_assoc($res)){
                 $post_id = $row['post_id'];
                 $post_title = $row['post_title'];
@@ -48,7 +54,10 @@
             <hr>
             <?php   
             }
-            
+        }
+        }else{
+            header("Location: index.php");
+        }
             ?>
         </div>
     </div>
