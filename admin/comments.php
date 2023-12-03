@@ -19,21 +19,21 @@
                          welcome admin
                          <small>Author</small>
                      </h1>
-                     <?php 
-if(isset($_GET['source'])){
-    $source = $_GET['source'];
-                    }else{
-    $source = '';
-}
-                  
-                     switch($source){
+                     <?php
+                        if (isset($_GET['source'])) {
+                            $source = $_GET['source'];
+                        } else {
+                            $source = '';
+                        }
 
-                         default:
-                             include "./includes/view_all_comments.php";
-                             break;
-                     }
-                     
-                     ?>
+                        switch ($source) {
+
+                            default:
+                                include "./includes/view_all_comments.php";
+                                break;
+                        }
+
+                        ?>
 
 
                  </div>

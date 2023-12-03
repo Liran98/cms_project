@@ -32,9 +32,15 @@
                 $curpage = ($page * 5) - 5;
             }
 
+            if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                $query = "SELECT * FROM posts";
+            } else {
+                $query = "SELECT * FROM posts WHERE post_status = 'published' LIMIT $curpage,5";
+            }
+
 //? LIMIT is similar to slice in js , $curpage is 1 then show first 5 posts
 //? $curpage is 2 then multiple it by 5 is 10 then minus 5 is 5 
-            $query = "SELECT * FROM posts WHERE post_status = 'published' LIMIT $curpage,5";
+            // $query = "SELECT * FROM posts WHERE post_status = 'published' LIMIT $curpage,5";
 
             $res = mysqli_query($conn, $query);
             $count = mysqli_num_rows($res);

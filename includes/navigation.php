@@ -18,7 +18,7 @@
                 <?php
 
 
-                $query = 'SELECT * FROM categories LIMIT 1';
+                $query = 'SELECT * FROM categories';
 
                 $res = mysqli_query($conn, $query);
 
@@ -30,7 +30,7 @@
                     $cat_title = $row['cat_title'] . "<br>";
                     $cat_id = $row['cat_id'];
 
-                    echo "<li><a>{$cat_title}</a></li>";
+                    echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                 }
                 ?>
                 <li>
