@@ -30,7 +30,18 @@
                     $cat_title = $row['cat_title'] . "<br>";
                     $cat_id = $row['cat_id'];
 
-                    echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
+                    $category_class = '';
+                    $registration_class = '';
+
+                    $pageName =  basename($_SERVER['PHP_SELF']);
+
+                    $registration = 'registration.php';
+                    if (isset($_GET['category']) && $_GET['category'] == $cat_id) {
+                        $category_class = 'active';
+                    } else if ($pageName == $registration) {
+                    }
+
+                    echo "<li><a  class='active' href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                 }
                 ?>
                 <li>
@@ -47,21 +58,21 @@
                 <?php
                 //? CAN ONLY SEE THE EDIT POST IN NAVBAR IF THE USER HAS LOGGED IN
                 if (isset($_SESSION['role'])) {
-                   
-                       if(isset($_GET['p_id'])){
+
+                    if (isset($_GET['p_id'])) {
                         $post_id = $_GET['p_id'];
                         echo  "<li><a href='./admin/posts.php?source=edit_post&p_id=$post_id'>Edit Post</a></li>";
                     }
                 }
 
-if(!isset($_SESSION['username'])){
-    echo  "<li><a href='registration.php'>Register</a></li>";
-}
+                if (!isset($_SESSION['username'])) {
+                    echo  "<li><a href='registration.php'>Register</a></li>";
+                }
 
 
                 ?>
 
-<li><a href='contact.php'>Contact</a></li>
+                <li><a href='contact.php'>Contact</a></li>
 
 
 
