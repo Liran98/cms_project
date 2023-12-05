@@ -11,8 +11,6 @@
 $user = mysqli_real_escape_string($conn,$user);
 $password = mysqli_real_escape_string($conn,$password);
 
-
-
 $query = "SELECT * FROM users WHERE user_name = '$user'";
 
 $res = mysqli_query($conn,$query);

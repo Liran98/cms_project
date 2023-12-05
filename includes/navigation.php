@@ -32,16 +32,23 @@
 
                     $category_class = '';
                     $registration_class = '';
+                    $contact_class ='';
 
+                    //? gets the name of the php file
                     $pageName =  basename($_SERVER['PHP_SELF']);
 
                     $registration = 'registration.php';
+                    $contact = 'contact.php';
+
                     if (isset($_GET['category']) && $_GET['category'] == $cat_id) {
                         $category_class = 'active';
                     } else if ($pageName == $registration) {
+                        $registration_class = 'active';
+                    }else if($pageName == $contact){
+                        $contact_class = 'active';
                     }
 
-                    echo "<li><a  class='active' href='category.php?category=$cat_id'>{$cat_title}</a></li>";
+                    echo "<li class='$category_class'><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                 }
                 ?>
                 <li>
@@ -66,13 +73,13 @@
                 }
 
                 if (!isset($_SESSION['username'])) {
-                    echo  "<li><a href='registration.php'>Register</a></li>";
+                    echo  "<li class='$registration_class'><a href='registration.php'>Register</a></li>";
                 }
 
 
                 ?>
 
-                <li><a href='contact.php'>Contact</a></li>
+                <li class="<?php echo $contact_class; ?>"><a href='contact.php'>Contact</a></li>
 
 
 
