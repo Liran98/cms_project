@@ -103,15 +103,12 @@ $id = $_GET['p_id'];
             $title = $row['cat_title'];
             $cat_id = $row['cat_id'];
 
-            if($id == $cat_id ){
-               echo" <option value='$cat_id'>$title</option>";
+            if($category === $cat_id ){
+               echo" <option selected value='$cat_id'>$title</option>";
             }else{
             echo "<option value=' $cat_id'> $title</option>";
             }
             ?>
-             
-
-               
                <?php
                }
                ?>
