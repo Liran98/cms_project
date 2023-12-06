@@ -112,7 +112,9 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                         $date = $row['post_date'];
                         $view = $row['post_views_count'];
 
-
+                        if (empty($tags)) {
+                            $tags = "no tags found";
+                        }
 
 
 
@@ -147,10 +149,10 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
                                 $cat_title = $row['cat_title'];
                             }
-                            if(empty($cat_title)) {
+                            if (empty($cat_title)) {
                                 echo "<td>please edit your post 
                                 <a href='posts.php?source=edit_post&p_id=$id'>📝</a></td>";
-                            }else{
+                            } else {
                                 echo "<td>$cat_title</td>";
                             }
                             ?>
