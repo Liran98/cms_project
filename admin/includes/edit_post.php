@@ -171,7 +171,7 @@ $id = $_GET['p_id'];
 
        <div class="form-group">
            <label for="post_content">Post Content</label>
-           <textarea name="post_Content"  class="form-control"  id="summernote" value=""><?php echo $content; ?></textarea>
+           <textarea name="post_Content"  class="form-control"  id="summernote" value=""><?php echo str_replace('\r\n','<br>',$content) ?></textarea>
        </div>
 
        <div class="form-group">
