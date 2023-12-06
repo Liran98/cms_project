@@ -96,12 +96,22 @@ $id = $_GET['p_id'];
         }
        ?>
            <select name="post_category" id="">
+          
+          
                <?php
         while($row = mysqli_fetch_assoc($res)){
             $title = $row['cat_title'];
-            $id = $row['cat_id'];
+            $cat_id = $row['cat_id'];
+
+            if($id == $cat_id ){
+               echo" <option value='$cat_id'>$title</option>";
+            }else{
+            echo "<option value=' $cat_id'> $title</option>";
+            }
             ?>
-               <option value="<?php echo $id;?>"><?php echo $title;?></option>
+             
+
+               
                <?php
                }
                ?>
