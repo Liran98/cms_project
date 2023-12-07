@@ -1,6 +1,5 @@
  <?php include "./includes/admin_header.php"; ?>
  <div id="wrapper">
-
      <!-- Navigation -->
      <?php include "./includes/admin_navigation.php"; ?>
      <div id="page-wrapper">
@@ -116,7 +115,6 @@
                         //                                }
                         ?>
                      <td><?php echo $comment_email; ?></td>
-
                      <td><?php echo $comment_status; ?></td>
 
 
@@ -133,11 +131,7 @@
 
                             echo "<td><a href='../post.php?p_id=$id'>$title</a></td>";
                         }
-
                         ?>
-
-
-
 
                      <td><?php echo $comment_date; ?></td>
 

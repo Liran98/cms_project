@@ -15,7 +15,6 @@ function insert_categories()
 
             $results = mysqli_query($conn, $query);
 
-
             confirmQuery($results);
         }
     }
@@ -134,7 +133,7 @@ function find_all_categories()
 
                 $username = $_POST['username'];
                 $password = $_POST['password'];
-                $password = password_hash($password,PASSWORD_BCRYPT,array('cost'=>12));
+                $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
                 $fname = $_POST['firstname'];
                 $lname = $_POST['lastname'];
@@ -212,6 +211,13 @@ function find_all_categories()
 
                     $users_online_query = mysqli_query($conn, "SELECT * FROM users_online WHERE time > '$timeout'");
 
+                    while($row = mysqli_fetch_assoc($users_online_query)){
+                        $time = $row['time'];
+                        $session = $row['session'];
+                    };
+                    
+
+
                     $count_online = mysqli_num_rows($users_online_query);
                     echo $count_online;
                 }
@@ -220,12 +226,19 @@ function find_all_categories()
 
         getusersonline();
 
-        function escape($string){
+        function escape($string)
+        {
             global $conn;
             // trim(strip_tags($string));
-       return mysqli_real_escape_string($conn,trim($string));
+            return mysqli_real_escape_string($conn, trim($string));
         }
-     
-            ?>
 
-            
+
+        function recordCount($table)
+        {
+            global $conn;
+            $query = "SELECT * FROM $table";
+            $res = mysqli_query($conn, $query);
+            return  mysqli_num_rows($res);
+        }
+            ?>

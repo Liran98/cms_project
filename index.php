@@ -48,8 +48,6 @@
                 echo "<h1 class='text-center'>no posts found add one maybe?</h1>";
             }
 
-
-
             while ($row = mysqli_fetch_assoc($res)) {
                 $post_id = $row['post_id'];
                 $post_title = $row['post_title'];
@@ -58,7 +56,6 @@
                 $post_image = $row['post_image'];
                 $post_status = $row['post_status'];
                 $post_content = substr($row['post_content'], 0, 250);
-
             ?>
                 <h1 class="page-header">
                     Page Heading

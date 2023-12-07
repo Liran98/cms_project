@@ -4,9 +4,7 @@
     <?php include "./includes/admin_navigation.php"; ?>
 
     <div id="page-wrapper">
-
         <div class="container-fluid">
-
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
@@ -21,8 +19,6 @@
             </div>
             <!-- /.row -->
 
-            <!-- /.row -->
-
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
@@ -34,12 +30,9 @@
                                 <div class="col-xs-9 text-right">
                                     <div class='huge '>
                                         <span class="posts_online">
-                                        <?php
-        $query = 'SELECT * FROM posts';
-        $res = mysqli_query($conn, $query);
-        $count_posts = mysqli_num_rows($res);
-        echo $count_posts;
-                                        ?>
+                                            <?php
+                                            echo $count_posts =  recordCount('posts');
+                                            ?>
                                         </span>
                                     </div>
                                     <div>Posts</div>
@@ -65,10 +58,7 @@
                                 <div class="col-xs-9 text-right">
                                     <div class='huge'>
                                         <?php
-                                        $query = 'SELECT * FROM comments';
-                                        $res = mysqli_query($conn, $query);
-                                        $count_comment = mysqli_num_rows($res);
-                                        echo $count_comment;
+                                        echo $count_comment= recordCount('comments');
                                         ?>
                                     </div>
                                     <div>Comments</div>
@@ -94,13 +84,10 @@
                                 <div class="col-xs-9 text-right">
                                     <div class='huge'>
                                         <?php
-                                        $query = 'SELECT * FROM users';
-                                        $res = mysqli_query($conn, $query);
-                                        $count_user = mysqli_num_rows($res);
-                                        echo $count_user;
+                                        echo $count_user = recordCount('users');
                                         ?>
                                     </div>
-                                    <div> Users</div>
+                                    <div>Users</div>
                                 </div>
                             </div>
                         </div>
@@ -123,10 +110,7 @@
                                 <div class="col-xs-9 text-right">
                                     <div class='huge'>
                                         <?php
-                                        $query = 'SELECT * FROM categories';
-                                        $res = mysqli_query($conn, $query);
-                                        $count_categories = mysqli_num_rows($res);
-                                        echo $count_categories;
+                                        echo $count_categories =  recordCount('categories');
                                         ?>
                                     </div>
                                     <div>Categories</div>
@@ -163,14 +147,9 @@
             $count_user_subs = mysqli_num_rows($res_user);
             ?>
 
-
-
             <?php
-            $elements_count = ["", $count_post_pub, $count_post_draft, $count_categories, $count_user, $count_user_subs, $count_comment, $count_comment_unapproved];
-
+            $elements_count = [$count_posts, $count_post_pub, $count_post_draft, $count_categories, $count_user, $count_user_subs, $count_comment, $count_comment_unapproved];
             $elements_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Categories', 'Users', 'Subscribers', 'Comments', 'Unapproved Comments'];
-
-
             ?>
             <div class="row">
                 <script type="text/javascript">
@@ -189,11 +168,9 @@
                                 echo "['$text','$count'],";
                             }
                             ?>
-
                         ]);
 
                         var options = {
-
                         };
 
                         var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
@@ -204,17 +181,11 @@
 
                 <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
             </div>
-
-
             </body>
-
-
         </div>
         <!-- /.container-fluid -->
-
     </div>
     <!-- /#page-wrapper -->
-
 </div>
 <!-- /#wrapper -->
 

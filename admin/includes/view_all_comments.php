@@ -106,19 +106,12 @@
 
                             echo "<td><a href='../post.php?p_id=$id'>$title</a></td>";
                         }
-
                         ?>
-
-
-
-
                      <td><?php echo $comment_date; ?></td>
 
                      <td><a href="comments.php?approve=<?php echo $comment_id; ?>">approve</a>
                      <td><a href="comments.php?unapprove=<?php echo $comment_id; ?>">unapprove</a></td>
-
                      <td><a href="comments.php?delete=<?php echo $comment_id; ?>">🗑️</a></td>
-
                  </tr>
              <?php
                 }
