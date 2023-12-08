@@ -241,4 +241,11 @@ function find_all_categories()
             $res = mysqli_query($conn, $query);
             return  mysqli_num_rows($res);
         }
+
+        function statusCount($table,$status,$string){
+            global $conn;
+            $query = "SELECT * FROM $table WHERE $status = '$string'";
+            $res = mysqli_query($conn, $query);
+            return mysqli_num_rows($res);
+        }
             ?>

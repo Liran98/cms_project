@@ -130,21 +130,10 @@
             <!-- /.row -->
 
             <?php
-            $query_pub = "SELECT * FROM posts WHERE post_status = 'published'";
-            $res_count_pub = mysqli_query($conn, $query_pub);
-            $count_post_pub = mysqli_num_rows($res_count_pub);
-
-            $query = "SELECT * FROM posts WHERE post_status = 'draft'";
-            $res_count = mysqli_query($conn, $query);
-            $count_post_draft = mysqli_num_rows($res_count);
-
-            $query_comment = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
-            $res_comment = mysqli_query($conn, $query_comment);
-            $count_comment_unapproved = mysqli_num_rows($res_comment);
-
-            $query_user = "SELECT * FROM users WHERE user_role = 'subscriber'";
-            $res_user = mysqli_query($conn, $query_user);
-            $count_user_subs = mysqli_num_rows($res_user);
+            $count_post_pub = statusCount('posts','post_status','published');
+            $count_post_draft = statusCount('posts','post_status','draft');
+            $count_comment_unapproved = statusCount('comments','comment_status','unapproved');
+            $count_user_subs = statusCount('users','user_role','subscriber');
             ?>
 
             <?php
@@ -165,7 +154,7 @@
                             for ($i = 0; $i < 8; $i++) {
                                 $text = $elements_text[$i];
                                 $count = $elements_count[$i];
-                                echo "['$text','$count'],";
+                                echo "['$text',$count],";
                             }
                             ?>
                         ]);
