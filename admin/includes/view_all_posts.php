@@ -90,12 +90,26 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
              </thead>
              <tbody>
                  <?php
-                    $query = "SELECT * FROM posts ORDER BY post_id DESC";
+                    // $query = "SELECT * FROM posts ORDER BY post_id DESC";
+                    
+                    // $query = "SELECT posts.post_id, posts.post_author,posts.post_title, ";
+                    // $query .= "posts.post_user, posts.post_date, posts.post_image, ";
+                    // $query .= "posts.post_content, posts.post_tags, posts.post_comment_count ";
+                    // $query .= "posts.post_status , posts_views_count ";
+                    // $query .= "categories.cat_id, categories.cat_title FROM posts ";
+                    // $query .= "LEFT JOIN categories ON posts.posts_category_id = categories.cat_id";
+                    
+                    //? you can pull data from both tables
+                    $query = "SELECT * FROM posts LEFT JOIN
+                     categories ON posts.post_category_id
+                      = categories.cat_id ORDER BY
+                       posts.post_id DESC";
+
                     $res = mysqli_query($conn, $query);
 
-                    //  if(!$res){
-                    //      die("query failed" . mysqli_error($conn));
-                    //  }
+                     if(!$res){
+                         die(mysqli_error($conn));
+                     }
 
 
                     while ($row = mysqli_fetch_assoc($res)) {
@@ -111,6 +125,9 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                         $comments = $row['post_comment_count'];
                         $date = $row['post_date'];
                         $view = $row['post_views_count'];
+                        //? from categories table
+                        $cat_title = $row['cat_title'];
+                        $cat_id = $row['cat_id'];
 
                         if (empty($tags)) {
                             $tags = "no tags found";
@@ -142,13 +159,14 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
                          <?php
 
-                            $cat_query = "SELECT * FROM categories WHERE cat_id =$post_category_id";
-                            $cat_res = mysqli_query($conn, $cat_query);
+                            // $cat_query = "SELECT * FROM categories WHERE cat_id =$post_category_id";
+                            // $cat_res = mysqli_query($conn, $cat_query);
 
-                            while ($row = mysqli_fetch_assoc($cat_res)) {
+                            // while ($row = mysqli_fetch_assoc($cat_res)) {
 
-                                $cat_title = $row['cat_title'];
-                            }
+                            //     $cat_title = $row['cat_title'];
+                            // }
+
                             if (empty($cat_title)) {
                                 echo "<td>please edit your post 
                                 <a href='posts.php?source=edit_post&p_id=$id'>📝</a></td>";
