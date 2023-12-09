@@ -211,11 +211,11 @@ function find_all_categories()
 
                     $users_online_query = mysqli_query($conn, "SELECT * FROM users_online WHERE time > '$timeout'");
 
-                    while($row = mysqli_fetch_assoc($users_online_query)){
+                    while ($row = mysqli_fetch_assoc($users_online_query)) {
                         $time = $row['time'];
                         $session = $row['session'];
                     };
-                    
+
 
 
                     $count_online = mysqli_num_rows($users_online_query);
@@ -242,10 +242,28 @@ function find_all_categories()
             return  mysqli_num_rows($res);
         }
 
-        function statusCount($table,$status,$string){
+        function statusCount($table, $status, $string)
+        {
             global $conn;
             $query = "SELECT * FROM $table WHERE $status = '$string'";
             $res = mysqli_query($conn, $query);
             return mysqli_num_rows($res);
+        }
+
+
+        function is_admin($username = '')
+        {
+            global $conn;
+
+            $query ="SELECT user_role FROM users WHERE user_name = '$username'";
+            $res = mysqli_query($conn, $query);
+          
+            $row = mysqli_fetch_assoc($res);
+
+            if($row['user_role'] == 'admin'){
+                return true;
+            }else{
+                return false;
+            }
         }
             ?>

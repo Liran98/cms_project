@@ -125,6 +125,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                         $comments = $row['post_comment_count'];
                         $date = $row['post_date'];
                         $view = $row['post_views_count'];
+                        
                         //? from categories table
                         $cat_title = $row['cat_title'];
                         $cat_id = $row['cat_id'];
