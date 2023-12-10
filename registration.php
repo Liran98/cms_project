@@ -1,6 +1,5 @@
 <?php include "includes/db.php"; ?>
 <?php include "includes/header.php"; ?>
-<?php include "./admin/functions.php"; ?>
 
 <!-- Navigation -->
 
@@ -12,53 +11,7 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-
-
-if (!empty($user) && !empty($password) && !empty($email)) {
-    $user = mysqli_real_escape_string($conn, $user);
-    $password = mysqli_real_escape_string($conn, $password);
-    $email = mysqli_real_escape_string($conn, $email);
-
-   
-    /* 
-    ?$query = "SELECT randSalt FROM users";
-   ? $res = mysqli_query($conn, $query);
-    ?if (!$res) {
-       ? die(mysqli_error($conn));
-    ?}
-    ?$row = mysqli_fetch_assoc($res);
-    ?$salt = $row['randSalt'];
-     */
-    // $salt = '$2y$10$iusesomecrazystrings22';
-    // $password = crypt($password, $salt);
-    
-
-$password = password_hash($password,PASSWORD_BCRYPT,array('cost' => 12));
-
-if(!usernameExists($user) && !emailExists($email)){
-
-
-    $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt)";
-    $query .= " VALUES ('$user','$password','','','$email','','subscriber','')";
-    $res = mysqli_query($conn, $query);
-    if (!$res) {
-        die(mysqli_error($conn));
-    }
-  
-
-    $msg = "User Registered successfully";
-    echo "<div class='bg-success text-center'>$msg</div>";
-}else{
-    $msg =  "User already exists or email exists already";
-    echo "<p class='bg-danger text-center'>$msg</p>";
-}
-} else {
-    
-    $msg = "fields cannot be empty";
-    echo "<p class='bg-danger text-center'>$msg</p>";
-}
-
- 
+ register_user($user,$email,$password);
 
    }
 

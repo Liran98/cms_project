@@ -268,10 +268,11 @@ function find_all_categories()
         }
 
 
-        function usernameExists($user){
+        function usernameExists($user)
+        {
             global $conn;
             $query = "SELECT user_name FROM users WHERE user_name = '$user'";
-            $res = mysqli_query($conn,$query);
+            $res = mysqli_query($conn, $query);
             confirmQuery($res);
 
             $count = mysqli_num_rows($res);
@@ -284,10 +285,11 @@ function find_all_categories()
             return $count;
         }
 
-        function emailExists($email){
+        function emailExists($email)
+        {
             global $conn;
             $query = "SELECT user_email FROM users WHERE user_email = '$email'";
-            $res = mysqli_query($conn,$query);
+            $res = mysqli_query($conn, $query);
             confirmQuery($res);
 
             $count = mysqli_num_rows($res);
@@ -299,5 +301,42 @@ function find_all_categories()
             }
             return $count;
         }
-       
+
+
+        function redirect($location)
+        {
+            return header("Location:" . $location);
+        }
+
+        function register_user($user, $email, $password)
+        {
+            global $conn;
+
+            if (!empty($user) && !empty($password) && !empty($email)) {
+                $user = mysqli_real_escape_string($conn, $user);
+                $password = mysqli_real_escape_string($conn, $password);
+                $email = mysqli_real_escape_string($conn, $email);
+
+                $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+
+                if (!usernameExists($user) && !emailExists($email)) {
+                    $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt)";
+                    $query .= " VALUES ('$user','$password','','','$email','','subscriber','')";
+                    $res = mysqli_query($conn, $query);
+                    if (!$res) {
+                        die(mysqli_error($conn));
+                    }
+
+                    $msg = "User Registered successfully";
+                    echo "<div class='bg-success text-center'>$msg</div>";
+                } else {
+                    $msg =  "User already exists or email exists already";
+                    echo "<p class='bg-danger text-center'>$msg</p>";
+                }
+            } else {
+
+                $msg = "fields cannot be empty";
+                echo "<p class='bg-danger text-center'>$msg</p>";
+            }
+        }
             ?>
