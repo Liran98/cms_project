@@ -255,15 +255,49 @@ function find_all_categories()
         {
             global $conn;
 
-            $query ="SELECT user_role FROM users WHERE user_name = '$username'";
+            $query = "SELECT * FROM users WHERE user_name = '$username'";
             $res = mysqli_query($conn, $query);
-          
+
             $row = mysqli_fetch_assoc($res);
 
-            if($row['user_role'] == 'admin'){
+            if ($row['user_role'] == 'admin') {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
+
+
+        function usernameExists($user){
+            global $conn;
+            $query = "SELECT user_name FROM users WHERE user_name = '$user'";
+            $res = mysqli_query($conn,$query);
+            confirmQuery($res);
+
+            $count = mysqli_num_rows($res);
+
+            if ($count > 0) {
+                return true;
+            } else {
+                return false;
+            }
+            return $count;
+        }
+
+        function emailExists($email){
+            global $conn;
+            $query = "SELECT user_email FROM users WHERE user_email = '$email'";
+            $res = mysqli_query($conn,$query);
+            confirmQuery($res);
+
+            $count = mysqli_num_rows($res);
+
+            if ($count > 0) {
+                return true;
+            } else {
+                return false;
+            }
+            return $count;
+        }
+       
             ?>
