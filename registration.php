@@ -7,11 +7,30 @@
 
 <?php
 if (isset($_POST['submit'])) {
-    $user = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $user = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
- register_user($user,$email,$password);
+    $error = [
+        'username'=>'',
+        'email'=>'',
+        'password'=>'',
+    ];
+
+    if(strlen($user) > 4){
+        $error['username'] = "Invalid username should be less than 4 characters";
+
+    }
+
+    foreach($error as $key => $val){
+        if(!empty($val)){
+            register_user($user,$email,$password);
+            login_user($user,$password);
+
+        }
+    }
+
+ 
 
    }
 

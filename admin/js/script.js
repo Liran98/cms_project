@@ -128,3 +128,8 @@ setInterval(function () {
 
 
 // });
+///////////////////////////////////////////////
+
+$('.msg').click(function (e) {
+  console.log("clicked");
+})
