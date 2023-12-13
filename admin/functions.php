@@ -1,3 +1,4 @@
+
 <?php
 
 function insert_categories()
@@ -342,8 +343,8 @@ function find_all_categories()
         function login_user($user, $password)
         {
             global $conn;
-            $user = trim(mysqli_real_escape_string($conn, $user));
-            $password = trim(mysqli_real_escape_string($conn, $password));
+            $user = mysqli_real_escape_string($conn, $user);
+            $password = mysqli_real_escape_string($conn, $password);
 
             $query = "SELECT * FROM users WHERE user_name = '$user'";
 
@@ -351,6 +352,7 @@ function find_all_categories()
 
             if (!$res) {
                 die(mysqli_error($conn));
+                echo "error";
             }
 
             while ($row = mysqli_fetch_assoc($res)) {
@@ -366,7 +368,7 @@ function find_all_categories()
             //*if(password_verify($password,$user_pass)){ other way to check  , 
             //  if($username === $user  && $password === $user_pass && $role === 'admin'){
             if (password_verify($password, $user_pass)) {
-                header("Location: ./admin");
+                header("Location: ../admin/index.php");
 
                 //?setting a session only when user logs in
                 //? and can only access the admin page only if logged in

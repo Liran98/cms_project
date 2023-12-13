@@ -86,6 +86,9 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                      <th>Views</th>
                      <th>delete</th>
                      <th>edit</th>
+                     <th>published</th>
+                     <th>draft</th>
+
                  </tr>
              </thead>
              <tbody>
@@ -188,6 +191,8 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <td><a data-get="<?php echo $id; ?>" class="del_link">🗑️</a></td>
 
                          <td><a href="posts.php?source=edit_post&p_id=<?php echo $id; ?>">📝</a></td>
+<td><a href="posts.php?pub=<?php echo $id; ?>">published</a></td>
+<td><a href="posts.php?draft=<?php echo $id; ?>">draft</a></td>
 
                      </tr>
                  <?php
@@ -229,6 +234,29 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
         $view_id = $_GET['reset_views'];
         $query = "UPDATE posts SET post_views_count = 0 WHERE post_id =" . mysqli_real_escape_string($conn, $_GET['reset_views']) . "";
         $res = mysqli_query($conn, $query);
+        header("Location: posts.php");
+    }
+
+
+
+    if(isset($_GET['pub'])){
+        $p_id = $_GET['pub'];
+        $query = "UPDATE posts SET post_status = 'published' WHERE post_id = $p_id";
+        $res = mysqli_query($conn,$query);
+
+        if(!$res){
+            die(mysqli_error($conn));
+        }
+        header("Location: posts.php");
+    }
+    if(isset($_GET['draft'])){
+        $p_id = $_GET['draft'];
+        $query = "UPDATE posts SET post_status = 'draft' WHERE post_id = $p_id";
+        $res = mysqli_query($conn,$query);
+
+        if(!$res){
+            die(mysqli_error($conn));
+        }
         header("Location: posts.php");
     }
     ?>

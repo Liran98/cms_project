@@ -29,7 +29,7 @@
                     $query = "SELECT * FROM posts WHERE post_id = $id AND post_status = 'published";
                 }
 
-
+                $query = "SELECT * FROM posts WHERE post_id = $id";
                 $res = mysqli_query($conn, $query);
                 if (mysqli_num_rows($res) < 1) {
                     echo "<h1 class='text-center'>no posts available</h1>";
