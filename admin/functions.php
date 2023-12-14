@@ -313,6 +313,7 @@ function find_all_categories()
             global $conn;
 
             if (!empty($user) && !empty($password) && !empty($email)) {
+                
                 $user = mysqli_real_escape_string($conn, $user);
                 $password = mysqli_real_escape_string($conn, $password);
                 $email = mysqli_real_escape_string($conn, $email);
@@ -323,6 +324,7 @@ function find_all_categories()
                     $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt)";
                     $query .= " VALUES ('$user','$password','','','$email','','subscriber','')";
                     $res = mysqli_query($conn, $query);
+
                     if (!$res) {
                         die(mysqli_error($conn));
                     }
