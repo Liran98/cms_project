@@ -343,6 +343,9 @@ function find_all_categories()
         function login_user($user, $password)
         {
             global $conn;
+
+            $user = trim($user);
+            $password = trim($password);
             $user = mysqli_real_escape_string($conn, $user);
             $password = mysqli_real_escape_string($conn, $password);
 
