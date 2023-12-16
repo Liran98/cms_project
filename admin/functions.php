@@ -312,15 +312,12 @@ function find_all_categories()
         {
             global $conn;
 
-          
-                
                 $user = mysqli_real_escape_string($conn, $user);
                 $password = mysqli_real_escape_string($conn, $password);
                 $email = mysqli_real_escape_string($conn, $email);
 
                 $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-                if (!usernameExists($user) && !emailExists($email)) {
                     $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt)";
                     $query .= " VALUES ('$user','$password','','','$email','','subscriber','')";
                     $res = mysqli_query($conn, $query);
@@ -331,8 +328,8 @@ function find_all_categories()
 
                     $msg = "User Registered successfully";
                     echo "<div class='bg-success msg text-center'>$msg</div>";
-                }
         }
+
 
         function login_user($user, $password)
         {
@@ -365,8 +362,6 @@ function find_all_categories()
             //*if(password_verify($password,$user_pass)){ other way to check  , 
             //  if($username === $user  && $password === $user_pass && $role === 'admin'){
             if (password_verify($password, $user_pass)) {
-                header("Location: ../admin/index.php");
-
                 //?setting a session only when user logs in
                 //? and can only access the admin page only if logged in
                 $_SESSION['username'] = $username;
@@ -374,8 +369,10 @@ function find_all_categories()
                 $_SESSION['lastname'] = $lastname;
                 $_SESSION['role'] = $role;
                 $_SESSION['id'] = $id;
+
+               redirect("../admin");
             } else {
-                header("Location: ../index.php");
+               redirect("../index.php");
             }
         }
             ?>

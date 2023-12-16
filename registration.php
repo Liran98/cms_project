@@ -7,7 +7,9 @@
 
 <?php
 
-if (isset($_POST['submit'])) {
+// if (isset($_POST['submit'])) {
+//?if the method is post then do the next action
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $user = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -21,6 +23,9 @@ if (isset($_POST['submit'])) {
     if (strlen($user) < 4) {
         $error['username'] = "Invalid username should atlease  4 characters";
     }
+    if (strlen($password) < 6) {
+        $error['password'] = "Invalid password should atlease 6 characters";
+    }
     if ($user == '') {
         $error['username'] = "user cannot be empty";
     }
@@ -31,21 +36,27 @@ if (isset($_POST['submit'])) {
         $error['email'] = "email must not be empty";
     }
     if (emailExists($email)) {
-        $error['email'] = 'email exists pick another one';
+        $error['email'] = "email exists pick another one <h3><a href='./index.php'>Login Instead👤</a></h3>";
+       
     }
-    if(usernameExists($user)){
+    if (usernameExists($user)) {
         $error['username'] = 'username already exists';
     }
 
 
     foreach ($error as $key => $val) {
-        //? if val not empty then register user = no errors 
+        //? if val  empty then register user = means if no errors 
         if (empty($val)) {
-         
-            register_user($user, $email, $password);
-            // login_user($user,$password);
 
+            unset($error[$key]);
         }
+    } //forEach
+
+
+    if (empty($error)) {
+        register_user($user, $email, $password);
+
+        login_user($user, $password);
     }
 }
 
@@ -67,7 +78,7 @@ if (isset($_POST['submit'])) {
                             <div class="form-group">
                                 <label for="username" class="sr-only">username</label>
                                 <input type="text" value="<?php echo isset($user) ? $user : '' ?>" name="username" id="username" class="form-control" placeholder="Enter Desired Username" autocomplete="on">
-                                <p class="bg-danger text-center"><?php echo isset($error['username']) ?  $error['username'] :'' ?></p>
+                                <p class="bg-danger text-center"><?php echo isset($error['username']) ?  $error['username'] : '' ?></p>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email</label>

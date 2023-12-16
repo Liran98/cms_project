@@ -7,7 +7,7 @@
             <?php
              $date = date("Y");
              ?>
-            <p>Copyright &copy; Your Website <?php echo $date; ?></p>
+            <p class="text-center">Copyright &copy; Your Website <?php echo $date; ?></p>
         </div>
         <!-- /.col-lg-12 -->
     </div>

@@ -44,22 +44,30 @@
 
             $res = mysqli_query($conn, $query);
             $count = mysqli_num_rows($res);
+
             if ($count === 0 || $count < 1) {
-                echo "<h1 class='text-center'>no posts found add one maybe?</h1>";
+                echo "<h1 class='text-center'>no posts found, add one maybe?</h1>";
             }
+           
 
             while ($row = mysqli_fetch_assoc($res)) {
                 $post_id = $row['post_id'];
+                $post_cat_id = $row['post_category_id'];
                 $post_title = $row['post_title'];
                 $post_user = $row['post_user'];
                 $post_date = $row['post_date'];
                 $post_image = $row['post_image'];
                 $post_status = $row['post_status'];
                 $post_content = substr($row['post_content'], 0, 250);
+
+                // $query = "SELECT * FROM categories WHERE category_id = $post_cat_id";
+                // $res = mysqli_query($conn,$query);
+                // $row = mysqli_fetch_assoc($res);
+                // $cat_title = $row['cat_title'];
             ?>
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                   <?php  echo $post_date; ?>
+                    <small></small>
                 </h1>
 
                 <!-- First Blog Post -->
@@ -96,7 +104,7 @@
     //? if theres 30 posts and we want 5 posts on each page then thats 6 buttons
     for ($i = 1; $i <= $num_pages; $i++) {
         if ($i == 1 && $page === "" || $page == $i) {
-            echo "<li><a class='bg-dark' href='index.php?page=$i'>$i</a></li>";
+            echo "<li><a class='bg-danger'  href='index.php?page=$i'>$i</a></li>";
         } else {
             echo "<li><a href='index.php?page=$i'>$i</a></li>";
         }

@@ -125,14 +125,7 @@
                         Login
                     </button>
                 </span>
-
-
             </div>
-
-
-
-
-
         </form>
         <?php
     }
