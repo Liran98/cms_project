@@ -26,7 +26,7 @@
                 }
 
                 while ($row = mysqli_fetch_assoc($res)) {
-                    $cat_title = $row['cat_title'] . "<br>";
+                    $cat_title = $row['cat_title'];
                     $cat_id = $row['cat_id'];
 
                     $category_class = '';

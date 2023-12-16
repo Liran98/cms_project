@@ -7,7 +7,7 @@ if(isset($_POST['update_post'])){
     
         $title = $_POST['title'];
         $category = $_POST['post_category'];
-        $post_user = $_POST['post_user'];
+        // $post_user = $_POST['post_user'];
         $status = $_POST['post_status'];
         $img = $_FILES['image']['name'];
         $temp_img = $_FILES['image']['tmp_name'];
@@ -26,12 +26,13 @@ if(isset($_POST['update_post'])){
     }
     }  
     $loguser = $_SESSION['username'];
+
     $query = "UPDATE posts SET ";
     $query .="post_title = '{$title}', ";
     $query .="post_category_id = '{$category}', ";
     $query .="post_date = now(), ";
-    $query .="post_author = '{$post_user}', ";
-    $query .="post_user = '$loguser', ";
+    $query .="post_author = '{$loguser}', ";
+    $query .="post_user = '{$loguser}', ";
     $query .="post_status = '{$status}', ";
     $query .="post_tags = '{$tags}', ";
     $query .="post_content = '{$content}', ";

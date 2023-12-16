@@ -6,6 +6,7 @@
 <?php include "includes/navigation.php"; ?>
 
 <?php
+
 if (isset($_POST['submit'])) {
     $user = trim($_POST['username']);
     $email = trim($_POST['email']);
@@ -17,17 +18,30 @@ if (isset($_POST['submit'])) {
         'password' => '',
     ];
 
-    if (strlen($user) > 4) {
-        echo  $error['username'] = "Invalid username should be less than 4 characters";
-    } else if ($password == '') {
-        echo $error['password'] = "password must not be empty";
-    } else if (emailExists($email)) {
-        echo  $error['email'] = 'email exists pick another one';
+    if (strlen($user) < 4) {
+        $error['username'] = "Invalid username should atlease  4 characters";
+    }
+    if ($user == '') {
+        $error['username'] = "user cannot be empty";
+    }
+    if ($password == '') {
+        $error['password'] = "password must not be empty";
+    }
+    if ($email == '') {
+        $error['email'] = "email must not be empty";
+    }
+    if (emailExists($email)) {
+        $error['email'] = 'email exists pick another one';
+    }
+    if(usernameExists($user)){
+        $error['username'] = 'username already exists';
     }
 
 
     foreach ($error as $key => $val) {
+        //? if val not empty then register user = no errors 
         if (empty($val)) {
+         
             register_user($user, $email, $password);
             // login_user($user,$password);
 
@@ -52,15 +66,18 @@ if (isset($_POST['submit'])) {
                         <form role="form" action="" method="post" id="login-form" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="username" class="sr-only">username</label>
-                                <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                                <input type="text" value="<?php echo isset($user) ? $user : '' ?>" name="username" id="username" class="form-control" placeholder="Enter Desired Username" autocomplete="on">
+                                <p class="bg-danger text-center"><?php echo isset($error['username']) ?  $error['username'] :'' ?></p>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email</label>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                                <input type="email" value="<?php echo isset($email) ? $email : '' ?>" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                                <p class="bg-danger text-center"><?php echo isset($error['email']) ? $error['email'] : '' ?></p>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="sr-only">Password</label>
                                 <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                                <p class="bg-danger text-center"><?php echo isset($error['password']) ? $error['password'] : '' ?></p>
                             </div>
 
 

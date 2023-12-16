@@ -17,15 +17,13 @@
 
 
                 if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
-                    $query = "SELECT * FROM posts WHERE post_category_id =$category_id";
+                    $query = "SELECT * FROM posts WHERE post_category_id = $category_id";
                 } else {
-                    $query = "SELECT * FROM posts WHERE post_category_id =$category_id AND post_status = 'published";
+                    $query = "SELECT * FROM posts WHERE post_category_id = $category_id AND post_status = 'published'";
                 }
+                // $query = "SELECT * FROM posts WHERE post_category_id = $category_id AND post_status = 'published";
 
-
-                // $query = "SELECT * FROM posts WHERE post_category_id =$category_id AND post_status = 'published";
                 $res = mysqli_query($conn, $query);
-
                 $count_cate = mysqli_num_rows($res);
 
                 if ($count_cate < 1) {

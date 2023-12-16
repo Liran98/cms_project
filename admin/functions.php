@@ -312,7 +312,7 @@ function find_all_categories()
         {
             global $conn;
 
-            if (!empty($user) && !empty($password) && !empty($email)) {
+          
                 
                 $user = mysqli_real_escape_string($conn, $user);
                 $password = mysqli_real_escape_string($conn, $password);
@@ -331,15 +331,7 @@ function find_all_categories()
 
                     $msg = "User Registered successfully";
                     echo "<div class='bg-success msg text-center'>$msg</div>";
-                } else {
-                    $msg =  "User already exists or email exists already";
-                    echo "<p class='bg-danger msg text-center'>$msg</p>";
                 }
-            } else {
-
-                $msg = "fields cannot be empty";
-                echo "<p class='bg-danger  msg text-center'>$msg</p>";
-            }
         }
 
         function login_user($user, $password)
