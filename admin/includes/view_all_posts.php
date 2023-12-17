@@ -94,14 +94,14 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
              <tbody>
                  <?php
                     // $query = "SELECT * FROM posts ORDER BY post_id DESC";
-                    
+
                     // $query = "SELECT posts.post_id, posts.post_author,posts.post_title, ";
                     // $query .= "posts.post_user, posts.post_date, posts.post_image, ";
                     // $query .= "posts.post_content, posts.post_tags, posts.post_comment_count ";
                     // $query .= "posts.post_status , posts_views_count ";
                     // $query .= "categories.cat_id, categories.cat_title FROM posts ";
                     // $query .= "LEFT JOIN categories ON posts.posts_category_id = categories.cat_id";
-                    
+
                     //? you can pull data from both tables
                     $query = "SELECT * FROM posts LEFT JOIN
                      categories ON posts.post_category_id
@@ -110,9 +110,9 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
                     $res = mysqli_query($conn, $query);
 
-                     if(!$res){
-                         die(mysqli_error($conn));
-                     }
+                    if (!$res) {
+                        die(mysqli_error($conn));
+                    }
 
 
                     while ($row = mysqli_fetch_assoc($res)) {
@@ -128,7 +128,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                         $comments = $row['post_comment_count'];
                         $date = $row['post_date'];
                         $view = $row['post_views_count'];
-                        
+
                         //? from categories table
                         $cat_title = $row['cat_title'];
                         $cat_id = $row['cat_id'];
@@ -188,11 +188,15 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <!-- you can use rel on <a></a> then call it with javascript -->
                          <!-- <a rel="post_id" href=""></a> -->
 
-                         <td><a data-get="<?php echo $id; ?>" class="del_link">🗑️</a></td>
+                         <form action="post">
+                             <input type="hidden" name="post_id" value="<?php echo $id; ?>">
+                             <td><input class='btn btn-danger' value="Delete" type="submit" name="delete"></td>
+                         </form>
 
-                         <td><a href="posts.php?source=edit_post&p_id=<?php echo $id; ?>">📝</a></td>
-<td><a href="posts.php?pub=<?php echo $id; ?>">published</a></td>
-<td><a href="posts.php?draft=<?php echo $id; ?>">draft</a></td>
+                         <!-- <td><a data-get="<?php echo $id; ?>" class="del_link">🗑️</a></td> -->
+                         <td class="bg-success"><a  href="posts.php?source=edit_post&p_id=<?php echo $id; ?>">📝</a></td>
+                         <td><a href="posts.php?pub=<?php echo $id; ?>">published</a></td>
+                         <td><a href="posts.php?draft=<?php echo $id; ?>">draft</a></td>
 
                      </tr>
                  <?php
@@ -207,8 +211,8 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
  <?php
 
-    if (isset($_GET['delete'])) {
-        $id = $_GET['delete'];
+    if (isset($_POST['delete'])) {
+        $id = $_POST['post_id'];
 
         $query = "DELETE FROM posts WHERE post_id = $id";
 
@@ -239,22 +243,22 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
 
 
-    if(isset($_GET['pub'])){
+    if (isset($_GET['pub'])) {
         $p_id = $_GET['pub'];
         $query = "UPDATE posts SET post_status = 'published' WHERE post_id = $p_id";
-        $res = mysqli_query($conn,$query);
+        $res = mysqli_query($conn, $query);
 
-        if(!$res){
+        if (!$res) {
             die(mysqli_error($conn));
         }
         header("Location: posts.php");
     }
-    if(isset($_GET['draft'])){
+    if (isset($_GET['draft'])) {
         $p_id = $_GET['draft'];
         $query = "UPDATE posts SET post_status = 'draft' WHERE post_id = $p_id";
-        $res = mysqli_query($conn,$query);
+        $res = mysqli_query($conn, $query);
 
-        if(!$res){
+        if (!$res) {
             die(mysqli_error($conn));
         }
         header("Location: posts.php");
