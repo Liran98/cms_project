@@ -42,7 +42,6 @@
                  <td><a href="users.php?subscriber=<?php echo $id; ?>">SUBSCRIBER</a></td>
                  <td><a href="users.php?delete=<?php echo $id; ?>">🗑️</a></td>
                  <td><a href="users.php?source=edit_user&user_id=<?php echo $id; ?>">📝</a></td>
-
              </tr>
          <?php
             }
@@ -57,7 +56,7 @@
 
             if ($_SESSION['user_role'] == 'admin') {
 
-                $id = mysqli_real_escape_string($conn,$_GET['delete']);
+                $id = mysqli_real_escape_string($conn, $_GET['delete']);
 
                 $query = "DELETE FROM users WHERE user_id = $id";
 
