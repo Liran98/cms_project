@@ -6,21 +6,25 @@
 
 <?php
 if (isset($_POST['submit'])) {
-$to = "lirankhalil61@gmail.com";
+$to = "lirankhalil61@mail.com";
 $user = $_POST['username'];
 $email = $_POST['email'];
 $msg = $_POST['txtbody'];
 $subject = $_POST['subject'];
 
-// $headers = array(
-//     'From' => $email,
-//     'Reply-To' => $to,
-    
-// );
+$headers = array(
+    'From' => $email,
+    'Reply-To' => $to,
+);
 
 
-mail($to,$subject,$msg); 
-
+$retval = mail ($to,$subject,$msg,$user);
+         
+if( $retval == true ) {
+   echo "Message sent successfully...";
+}else {
+   echo "Message could not be sent...";
+}
 }
 
 ?>
@@ -51,7 +55,7 @@ mail($to,$subject,$msg);
                             </div>
 <textarea name="txtbody" id="" cols="30" rows="10"></textarea>
 
-                            <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="send">
+                            <input type="submit" name="submit" id="" class="btn btn-custom btn-lg btn-block" value="send">
                         </form>
 
                     </div>
