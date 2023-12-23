@@ -2,10 +2,12 @@
 <?php  include "includes/header.php"; ?>
 
 
-<?php
-		checkIfUserIsLoggedInAndRedirect('/CMS_TEMPLATE/admin');
 
-		if(ifItIsMethod('POST')){
+<?php
+
+		checkIfUserIsLoggedInANDredirect('/CMS_TEMPLATE/admin');
+		
+		if(ifItIsMethod('post')){
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			if(isset($username) && isset($password)){

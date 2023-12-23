@@ -59,7 +59,7 @@
                         <a href="/CMS_TEMPLATE/includes/logout.php">Logout</a>
                     </li>
 
-                    <?php_else: ?>
+                    <?php else: ?>
                     <li>
                         <a href="/CMS_TEMPLATE/login">Login</a>
                     </li>

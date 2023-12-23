@@ -4,9 +4,11 @@ $error = [
     'username' => '',
     'pass' => ''
 ];
-checkIfUserIsLoggedInAndRedirect('/CMS_TEMPLATE/admin');
+
+checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
 
 if (ifItIsMethod('post')) {
+    
     $username = $_POST['username'];
     $password = $_POST['password'];
     if (isset($username) && isset($password)) {
@@ -24,10 +26,7 @@ if (ifItIsMethod('post')) {
 }
 ?>
 
-
-
 <div class="col-md-4">
-
     <!-- Blog Search Well -->
     <div class="well">
         <h4>Blog Search</h4>
@@ -139,7 +138,7 @@ if (ifItIsMethod('post')) {
         ?>
 
             <h4>Login</h4>
-            <form action="" method="post">
+            <form action="/CMS_TEMPLATE/login"  method="post">
                 <div class="form-group">
                     <label for="username">username</label>
                     <input name="username" type="text" class="form-control" placeholder="Enter username">

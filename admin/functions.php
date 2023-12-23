@@ -309,7 +309,7 @@ function find_all_categories()
         }
 
 // //////////////////////////////////////////////
-        function ifItIsMethod($method = null)
+        function ifItIsMethod($method=null)
         {
             if ($_SERVER['REQUEST_METHOD'] == strtoupper($method)) {
                 return true;
@@ -326,7 +326,7 @@ function find_all_categories()
             }
         }
 
-        function checkIfUserIsloggedInANDredirect($redirect_location){
+        function checkIfUserIsloggedInANDredirect($redirect_location=null){
             if(isLoggedin()){
                 redirect($redirect_location);
             }
@@ -379,21 +379,23 @@ function find_all_categories()
                 $firstname = $row['user_firstname'];
                 $lastname = $row['user_lastname'];
                 $role = $row['user_role'];
+
+                if (password_verify($password, $user_pass)) {
+                    //?setting a session only when user logs in
+                    //? and can only access the admin page only if logged in
+                    $_SESSION['username'] = $username;
+                    $_SESSION['firstname'] = $firstname;
+                    $_SESSION['lastname'] = $lastname;
+                    $_SESSION['role'] = $role;
+                    $_SESSION['id'] = $id;
+    
+                    redirect("/CMS_TEMPLATE/admin");
+                } else {
+                    return false;
+                }
             }
 
-            if (password_verify($password, $user_pass)) {
-                //?setting a session only when user logs in
-                //? and can only access the admin page only if logged in
-                $_SESSION['username'] = $username;
-                $_SESSION['firstname'] = $firstname;
-                $_SESSION['lastname'] = $lastname;
-                $_SESSION['role'] = $role;
-                $_SESSION['id'] = $id;
-
-                redirect("/CMS_TEMPLATE/admin");
-            } else {
-                return false;
-            }
+           return true;
             // $password = crypt($password,$user_pass);
 
             //*if(password_verify($password,$user_pass)){ other way to check  , 
