@@ -1,6 +1,32 @@
-<?php session_start(); ?>
-<div class="col-md-4">
+<?php
 
+$error = [
+    'username' => '',
+    'pass' => ''
+];
+checkIfUserIsLoggedInAndRedirect('/CMS_TEMPLATE/admin');
+
+if (ifItIsMethod('post')) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    if (isset($username) && isset($password)) {
+        login_user($username, $password);
+    } else {
+        redirect('/CMS_TEMPLATE/index');
+    }
+
+    if (!$password) {
+        $error['pass'] = 'invalid password';
+    }
+    if (!$username) {
+        $error['username'] = 'invalid username';
+    }
+}
+?>
+
+
+
+<div class="col-md-4">
 
     <!-- Blog Search Well -->
     <div class="well">
@@ -19,13 +45,6 @@
 
         <!-- /.input-group -->
     </div>
-
-
-
-
-
-
-
 
     <!-- Blog Categories Well -->
     <div class="well">
@@ -97,39 +116,48 @@
     <div class="well">
         <!--
             //other ways doing if else , with php
-             <?php // if('') ?>
-        <?php //else ?>
-        <?php //endif ?> 
+             <?php // if('') 
+                ?>
+        <?php //else 
+        ?>
+        <?php //endif 
+        ?> 
      -->
         <?php
+        // $error = [
+        //     'user' => '',
+        //     'pass' =>''
+        // ];
+
+
+
         if (isset($_SESSION['username'])) {
             $curUser = $_SESSION['username'];
             echo "<h2>this user is logged in: $curUser </h2>";
             echo "<a href='admin/includes/logout.php' name='logout' class='btn btn-danger'>LogOut</a>";
-        
+        } else {
+        ?>
 
-        }else{
-            ?>
-            
-        <h4>Login</h4>
-        <form action="includes/login.php" method="post">
-            <div class="form-group">
-                <label for="username">username</label>
-                <input name="username" type="text" class="form-control" placeholder="Enter username">
-            </div>
-            <div class="input-group">
-                <input name="password" type="password" class="form-control" placeholder="Enter password">
-
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" name="login" type="sumbit">
-                        Login
-                    </button>
-                </span>
-            </div>
-        </form>
+            <h4>Login</h4>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="username">username</label>
+                    <input name="username" type="text" class="form-control" placeholder="Enter username">
+                    <p class='bg-danger text-center'><?php echo $error['username']; ?></p>
+                </div>
+                <div class="input-group">
+                    <input name="password" type="password" class="form-control" placeholder="Enter password">
+                    <p class='bg-danger text-center'><?php echo $error['pass']; ?></p>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" name="login" type="sumbit">
+                            Login
+                        </button>
+                    </span>
+                </div>
+            </form>
         <?php
-    }
-    ?>
+        }
+        ?>
         <!--                search form-->
 
         <!-- /.input-group -->

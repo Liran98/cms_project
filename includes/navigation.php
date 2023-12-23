@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -31,7 +30,7 @@
 
                     $category_class = '';
                     $registration_class = '';
-                    $contact_class ='';
+                    $contact_class = '';
 
                     //? gets the name of the php file
                     $pageName =  basename($_SERVER['PHP_SELF']);
@@ -43,16 +42,29 @@
                         $category_class = 'active';
                     } else if ($pageName == $registration) {
                         $registration_class = 'active';
-                    }else if($pageName == $contact){
+                    } else if ($pageName == $contact) {
                         $contact_class = 'active';
                     }
 
                     echo "<li class='$category_class'><a href='/CMS_TEMPLATE/category/$cat_id'>{$cat_title}</a></li>";
                 }
                 ?>
-                <li>
-                    <a href="/CMS_TEMPLATE/admin">ADMIN</a>
-                </li>
+
+                <?php if(isLoggedin()): ?>
+
+                    <li>
+                        <a href="/CMS_TEMPLATE/admin">ADMIN</a>
+                    </li>
+                    <li>
+                        <a href="/CMS_TEMPLATE/includes/logout.php">Logout</a>
+                    </li>
+
+                    <?php_else: ?>
+                    <li>
+                        <a href="/CMS_TEMPLATE/login">Login</a>
+                    </li>
+
+                <?php endif; ?>
 
                 <!-- <li>
                     <a href="#">Services</a>

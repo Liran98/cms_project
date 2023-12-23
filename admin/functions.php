@@ -1,4 +1,3 @@
-
 <?php
 
 function insert_categories()
@@ -305,29 +304,54 @@ function find_all_categories()
 
         function redirect($location)
         {
-            return header("Location:" . $location);
+            header("Location:" . $location);
+            exit;
         }
 
+// //////////////////////////////////////////////
+        function ifItIsMethod($method = null)
+        {
+            if ($_SERVER['REQUEST_METHOD'] == strtoupper($method)) {
+                return true;
+            }
+            return false;
+        }
+
+        function isLoggedin()
+        {
+            if (isset($_SESSION['user_role'])) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function checkIfUserIsloggedInANDredirect($redirect_location){
+            if(isLoggedin()){
+                redirect($redirect_location);
+            }
+        }
+/////////////////////////////////////////////////////
         function register_user($user, $email, $password)
         {
             global $conn;
 
-                $user = mysqli_real_escape_string($conn, $user);
-                $password = mysqli_real_escape_string($conn, $password);
-                $email = mysqli_real_escape_string($conn, $email);
+            $user = mysqli_real_escape_string($conn, $user);
+            $password = mysqli_real_escape_string($conn, $password);
+            $email = mysqli_real_escape_string($conn, $email);
 
-                $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+            $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-                    $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt)";
-                    $query .= " VALUES ('$user','$password','','','$email','','subscriber','')";
-                    $res = mysqli_query($conn, $query);
+            $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt)";
+            $query .= " VALUES ('$user','$password','','','$email','','subscriber','')";
+            $res = mysqli_query($conn, $query);
 
-                    if (!$res) {
-                        die(mysqli_error($conn));
-                    }
+            if (!$res) {
+                die(mysqli_error($conn));
+            }
 
-                    $msg = "User Registered successfully";
-                    echo "<div class='bg-success msg text-center'>$msg</div>";
+            $msg = "User Registered successfully";
+            echo "<div class='bg-success msg text-center'>$msg</div>";
         }
 
 
@@ -346,7 +370,6 @@ function find_all_categories()
 
             if (!$res) {
                 die(mysqli_error($conn));
-                echo "error";
             }
 
             while ($row = mysqli_fetch_assoc($res)) {
@@ -357,10 +380,7 @@ function find_all_categories()
                 $lastname = $row['user_lastname'];
                 $role = $row['user_role'];
             }
-            // $password = crypt($password,$user_pass);
 
-            //*if(password_verify($password,$user_pass)){ other way to check  , 
-            //  if($username === $user  && $password === $user_pass && $role === 'admin'){
             if (password_verify($password, $user_pass)) {
                 //?setting a session only when user logs in
                 //? and can only access the admin page only if logged in
@@ -370,9 +390,13 @@ function find_all_categories()
                 $_SESSION['role'] = $role;
                 $_SESSION['id'] = $id;
 
-               redirect("../admin");
+                redirect("/CMS_TEMPLATE/admin");
             } else {
-               redirect("../index.php");
+                return false;
             }
+            // $password = crypt($password,$user_pass);
+
+            //*if(password_verify($password,$user_pass)){ other way to check  , 
+            //  if($username === $user  && $password === $user_pass && $role === 'admin'){
         }
             ?>
