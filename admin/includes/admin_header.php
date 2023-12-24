@@ -5,7 +5,6 @@
 <?php include "../includes/db.php"; ?>
 <?php include "functions.php"; ?>
 
-<?php session_start(); ?>
 
 <?php
 //?if theres no session started with role , then cannot access the admin page

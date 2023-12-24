@@ -51,9 +51,9 @@ if( $retval == true ) {
                            
                             <div class="form-group">
                                 <label for="subject" class="sr-only">subject</label>
-                                <input type="text" placeholder="subject" name="subject"/>
+                                <input  class="form-control" type="text" placeholder="subject" name="subject"/>
                             </div>
-<textarea name="txtbody" id="" cols="30" rows="10"></textarea>
+<textarea name="txtbody" id="summernote" rows="10" cols="30"></textarea>
 
                             <input type="submit" name="submit" id="" class="btn btn-custom btn-lg btn-block" value="send">
                         </form>

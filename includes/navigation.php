@@ -56,7 +56,7 @@
                         <a href="/CMS_TEMPLATE/admin">ADMIN</a>
                     </li>
                     <li>
-                        <a href="/CMS_TEMPLATE/includes/logout.php">Logout</a>
+                        <a href="/CMS_TEMPLATE/admin/includes/logout.php">Logout</a>
                     </li>
 
                     <?php else: ?>

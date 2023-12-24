@@ -52,9 +52,9 @@
 
  <?php
     if (isset($_GET['delete'])) {
-        if (isset($_SESSION['user_role'])) {
+        if (isset($_SESSION['role'])) {
 
-            if ($_SESSION['user_role'] == 'admin') {
+            if ($_SESSION['role'] == 'admin') {
 
                 $id = mysqli_real_escape_string($conn, $_GET['delete']);
 

@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <?php
 
 function insert_categories()
@@ -319,7 +321,7 @@ function find_all_categories()
 
         function isLoggedin()
         {
-            if (isset($_SESSION['user_role'])) {
+            if (isset($_SESSION['role'])) {
                 return true;
             } else {
                 return false;
@@ -353,7 +355,6 @@ function find_all_categories()
             $msg = "User Registered successfully";
             echo "<div class='bg-success msg text-center'>$msg</div>";
         }
-
 
         function login_user($user, $password)
         {

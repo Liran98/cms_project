@@ -5,7 +5,7 @@ $error = [
     'pass' => ''
 ];
 
-checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
+// checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
 
 if (ifItIsMethod('post')) {
     
@@ -138,7 +138,7 @@ if (ifItIsMethod('post')) {
         ?>
 
             <h4>Login</h4>
-            <form action="/CMS_TEMPLATE/login"  method="post">
+            <form   method="post">
                 <div class="form-group">
                     <label for="username">username</label>
                     <input name="username" type="text" class="form-control" placeholder="Enter username">
