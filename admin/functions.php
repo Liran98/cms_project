@@ -181,7 +181,7 @@ function find_all_categories()
                 global $conn;
 
                 if (!$conn) {
-                    session_start();
+                    // session_start();
                     include("../includes/db.php");
 
                     $session = session_id(); //get the current session id

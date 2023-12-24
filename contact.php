@@ -53,7 +53,7 @@ if( $retval == true ) {
                                 <label for="subject" class="sr-only">subject</label>
                                 <input  class="form-control" type="text" placeholder="subject" name="subject"/>
                             </div>
-<textarea name="txtbody" id="summernote" rows="10" cols="30"></textarea>
+<textarea name="txtbody" id="summernote" rows="10" cols="43"></textarea>
 
                             <input type="submit" name="submit" id="" class="btn btn-custom btn-lg btn-block" value="send">
                         </form>

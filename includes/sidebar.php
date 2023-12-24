@@ -5,10 +5,10 @@ $error = [
     'pass' => ''
 ];
 
-// checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
+checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
 
 if (ifItIsMethod('post')) {
-    
+
     $username = $_POST['username'];
     $password = $_POST['password'];
     if (isset($username) && isset($password)) {
@@ -16,13 +16,27 @@ if (ifItIsMethod('post')) {
     } else {
         redirect('/CMS_TEMPLATE/index');
     }
+    $query = "SELECT * FROM users WHERE user_name = '$username'";
+    $res = mysqli_query($conn, $query);
 
-    if (!$password) {
-        $error['pass'] = 'invalid password';
+    while ($row = mysqli_fetch_array($res)) {
+        $id = $row['user_id'];
+        $user = $row['user_name'];
+        $user_pass = $row['user_password'];
+    }
+if(!$id){
+    redirect('index');
+}else{
+    if (!$password || $user_pass !== $password) {
+        //uniqid() returns random id
+        $error['pass'] = 'invalid password' . "<br>";
+        $error['pass'] .= "<a href='forgot_pass.php?user_pass_id=$id'>Forgot password?</a>";
     }
     if (!$username) {
         $error['username'] = 'invalid username';
     }
+}
+    
 }
 ?>
 
@@ -123,10 +137,6 @@ if (ifItIsMethod('post')) {
         ?> 
      -->
         <?php
-        // $error = [
-        //     'user' => '',
-        //     'pass' =>''
-        // ];
 
 
 
@@ -138,7 +148,7 @@ if (ifItIsMethod('post')) {
         ?>
 
             <h4>Login</h4>
-            <form   method="post">
+            <form method="post">
                 <div class="form-group">
                     <label for="username">username</label>
                     <input name="username" type="text" class="form-control" placeholder="Enter username">
@@ -151,6 +161,7 @@ if (ifItIsMethod('post')) {
                         <button class="btn btn-info" name="login" type="sumbit">
                             Login
                         </button>
+
                     </span>
                 </div>
             </form>
