@@ -27,12 +27,13 @@ if (ifItIsMethod('post')) {
 
         if (emailExists($email)) {
             $stmt =  mysqli_prepare($conn, "UPDATE users SET token = '$token' WHERE user_email = ?");
+                                        //s for string
             mysqli_stmt_bind_param($stmt, "s", $email);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
-            echo "it does exists";
+            echo "<p class='bg-success text-center'>it does exists</p>";
         } else {
-            echo "it does not exists";
+            echo "<p class='bg-danger text-center'>it does not exists</p>";
             // mysqli_stmt_error($stmt)
         }
     }
