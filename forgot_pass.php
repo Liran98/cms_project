@@ -1,54 +1,7 @@
 <?php
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
-// require 'path/to/PHPMailer/src/Exception.php';
-// require 'path/to/PHPMailer/src/PHPMailer.php';
-// require 'path/to/PHPMailer/src/SMTP.php';
-
-//Load Composer's autoloader
-require 'vendor/autoload.php';
-
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(exceptions:true);
-
-try {
-    //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'sandbox.smtp.mailtrap.io';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = '5a71995e4dd8c5';                     //SMTP username
-    $mail->Password   = '26e5cfabdf4d57';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-    $mail->Port       = 2525;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-    //Recipients
-    $mail->setFrom('from@example.com', 'Mailer');
-    $mail->addAddress('i8urmom2ice@gmail.com', 'i8urmom');     //Add a recipient
-    $mail->addAddress('ellen@example.com');               //Name is optional
-    $mail->addReplyTo('info@example.com', 'Information');
-    $mail->addCC('cc@example.com');
-    $mail->addBCC('bcc@example.com');
-
-    //Attachments
-    // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-    $mail->send();
-    echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-}
 ?>
 
 
@@ -58,19 +11,16 @@ try {
 
 
 <?php
-if (!ifItIsMethod('get') && !isset($_GET['user_pass_id'])) {
+
+require './vendor/autoload.php';
+require './classes/Config.php';
+
+
+if(!ifItIsMethod('get') && !isset($_GET['forgot'])){
     redirect('index');
-} 
-else {
-    $id = $_GET['user_pass_id'];
-
-    $query = "SELECT * FROM users WHERE user_id = $id";
-    $res = mysqli_query($conn, $query);
-
-    while ($row = mysqli_fetch_array($res)) {
-        $user = $row['user_name'];
-    }
 }
+
+
 
 if (ifItIsMethod('post')) {
     if (isset($_POST['email'])) {
@@ -82,10 +32,43 @@ if (ifItIsMethod('post')) {
 
         if (emailExists($email)) {
             $stmt =  mysqli_prepare($conn, "UPDATE users SET token = '$token' WHERE user_email = ?");
-                                        //s for string
-            mysqli_stmt_bind_param($stmt, "s", $email);
+            //s for string
+            mysqli_stmt_bind_param($stmt, 's', $email);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
+
+            /*
+            *
+            *
+            configure 
+            *
+            *
+            */
+            $mail = new PHPMailer();
+            // echo get_class($mail);
+            $mail->isSMTP();
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->Host       = Config::SMTP_HOST;                     //Set the SMTP server to send through
+            $mail->Username   = Config::SMTP_USER;                     //SMTP username
+            $mail->Password   = Config::SMTP_PASSWORD;                               //SMTP password
+            $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
+            $mail->Port       = Config::SMTP_PORT;
+            $mail->SMTPAuth   = true; 
+            $mail->isHTML(true); //Enable HTML
+
+            $mail->setFrom('liran@gmail.com', 'liran');
+            $mail->addAddress($email);
+            $mail->Subject = 'This is a test email';
+
+            $mail->Body = '<h1>Email body</h1>';
+
+            if ($mail->send()) {
+                echo 'Email was sent successfully';
+            } else {
+                echo 'Sending email failed';
+            }
+
+
             echo "<p class='bg-success text-center'>it does exists</p>";
         } else {
             echo "<p class='bg-danger text-center'>it does not exists</p>";
@@ -110,7 +93,6 @@ if (ifItIsMethod('post')) {
                             <h3><i class="fa fa-lock fa-4x"></i></h3>
                             <h2 class="text-center">Forgot Password?</h2>
                             <p>You can reset your password here
-                            <h3><?php echo $user; ?>.</h3>
                             </p>
                             <div class="panel-body">
 

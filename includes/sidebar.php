@@ -7,6 +7,8 @@ $error = [
 
 checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
 
+
+
 if (ifItIsMethod('post')) {
 
     $username = $_POST['username'];
@@ -16,27 +18,16 @@ if (ifItIsMethod('post')) {
     } else {
         redirect('/CMS_TEMPLATE/index');
     }
-    $query = "SELECT * FROM users WHERE user_name = '$username'";
-    $res = mysqli_query($conn, $query);
 
-    while ($row = mysqli_fetch_array($res)) {
-        $id = $row['user_id'];
-        $user = $row['user_name'];
-        $user_pass = $row['user_password'];
-    }
-if(!$id){
-    redirect('index');
-}else{
-    if (!$password || $user_pass !== $password) {
-        //uniqid() returns random id
-        $error['pass'] = 'invalid password' . "<br>";
-        $error['pass'] .= "<a href='forgot_pass.php?user_pass_id=$id'>Forgot password?</a>";
-    }
+    $id = uniqid();
+
     if (!$username) {
         $error['username'] = 'invalid username';
     }
-}
-    
+    if (!$password) {
+        $error['pass'] = 'invalid Password';
+        $error['pass'] = "<a href='forgot_pass.php?forgot=$id'>Forgot password?</a>";
+    }
 }
 ?>
 
