@@ -60,7 +60,8 @@ try {
 <?php
 if (!ifItIsMethod('get') && !isset($_GET['user_pass_id'])) {
     redirect('index');
-} else {
+} 
+else {
     $id = $_GET['user_pass_id'];
 
     $query = "SELECT * FROM users WHERE user_id = $id";
