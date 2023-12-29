@@ -344,8 +344,8 @@ function find_all_categories()
 
             $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-            $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt)";
-            $query .= " VALUES ('$user','$password','','','$email','','subscriber','')";
+            $query = "INSERT INTO users (user_name,user_password,user_firstname,user_lastname,user_email,user_image,user_role,randSalt,token)";
+            $query .= " VALUES ('$user','$password','','','$email','','subscriber','','')";
             $res = mysqli_query($conn, $query);
 
             if (!$res) {

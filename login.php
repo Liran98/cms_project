@@ -1,28 +1,42 @@
-<?php  include "includes/db.php"; ?>
-<?php  include "includes/header.php"; ?>
+<?php include "includes/db.php"; ?>
+<?php include "includes/header.php"; ?>
 
 
 
 <?php
 
-		checkIfUserIsLoggedInANDredirect('/CMS_TEMPLATE/admin');
+checkIfUserIsLoggedInANDredirect('/CMS_TEMPLATE/admin');
+$error = [
+	'user' => '',
+	'pass' => ''
+];
+if (ifItIsMethod('post')) {
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	if (isset($username) && isset($password)) {
+		login_user($username, $password);
+	}
 		
-		if(ifItIsMethod('post')){
-			$username = $_POST['username'];
-			$password = $_POST['password'];
-			if(isset($username) && isset($password)){
-				login_user($username, $password);
-			}else {
-				redirect('/CMS_TEMPLATE/login');
-			}
+		
+		if($username =='' || !usernameExists($username)){
+			 $error['user'] = 'Invalid username';
 		}
+		
+		if($password == ''){
+			 $error['pass'] = 'Invalid password';
+		}
+	
+}
+
+
+
 ?>
 
 
 
 <!-- Navigation -->
 
-<?php  include "includes/navigation.php"; ?>
+<?php include "includes/navigation.php"; ?>
 
 
 <!-- Page Content -->
@@ -49,6 +63,8 @@
 											<span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
 
 											<input name="username" type="text" class="form-control" placeholder="Enter Username">
+										<p class="bg-danger"><?php echo  $error['user']; ?></p>
+
 										</div>
 									</div>
 
@@ -56,6 +72,7 @@
 										<div class="input-group">
 											<span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
 											<input name="password" type="password" class="form-control" placeholder="Enter Password">
+										<p class="bg-danger"><?php echo $error['pass']; ?></p>
 										</div>
 									</div>
 
@@ -64,6 +81,8 @@
 										<input name="login" class="btn btn-lg btn-primary btn-block" value="Login" type="submit">
 									</div>
 
+
+									<a href="forgot_pass.php?forgot=<?php uniqid(); ?>">Forgot password?</a>
 
 								</form>
 
@@ -78,6 +97,6 @@
 
 	<hr>
 
-	<?php include "includes/footer.php";?>
+	<?php include "includes/footer.php"; ?>
 
 </div> <!-- /.container -->

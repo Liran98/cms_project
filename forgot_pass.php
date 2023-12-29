@@ -16,7 +16,7 @@ require './vendor/autoload.php';
 require './classes/Config.php';
 
 
-if(!ifItIsMethod('get') && !isset($_GET['forgot'])){
+if (!ifItIsMethod('get') && !isset($_GET['forgot'])) {
     redirect('index');
 }
 
@@ -53,14 +53,18 @@ if (ifItIsMethod('post')) {
             $mail->Password   = Config::SMTP_PASSWORD;                               //SMTP password
             $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
             $mail->Port       = Config::SMTP_PORT;
-            $mail->SMTPAuth   = true; 
+            $mail->SMTPAuth   = true;
             $mail->isHTML(true); //Enable HTML
 
             $mail->setFrom('liran@gmail.com', 'liran');
             $mail->addAddress($email);
             $mail->Subject = 'This is a test email';
 
-            $mail->Body = '<h1>Email body</h1>';
+            $mail->Body = '<p>Click here to reset password
+            
+            <a href="http://localhost:8888/CMS_TEMPLATE/reset.php?email=' . $email . '&token=' . $token . '">Reset</a>
+            
+            </p>';
 
             if ($mail->send()) {
                 echo 'Email was sent successfully';
@@ -89,33 +93,36 @@ if (ifItIsMethod('post')) {
                     <div class="panel-body">
                         <div class="text-center">
 
+                            <?php if (!isset($email)) : ?>
 
-                            <h3><i class="fa fa-lock fa-4x"></i></h3>
-                            <h2 class="text-center">Forgot Password?</h2>
-                            <p>You can reset your password here
-                            </p>
-                            <div class="panel-body">
+                                <h3><i class="fa fa-lock fa-4x"></i></h3>
+                                <h2 class="text-center">Forgot Password?</h2>
+                                <p>You can reset your password here
+                                </p>
+                                <div class="panel-body">
 
 
 
 
-                                <form id="register-form" role="form" autocomplete="off" class="form" method="post">
+                                    <form id="register-form" role="form" autocomplete="off" class="form" method="post">
 
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input id="email" name="email" placeholder="email address" class="form-control" type="email">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                                <input id="email" name="email" placeholder="email address" class="form-control" type="email">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit">
-                                    </div>
+                                        <div class="form-group">
+                                            <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit">
+                                        </div>
 
-                                    <input type="hidden" class="hide" name="token" id="token" value="">
-                                </form>
+                                        <input type="hidden" class="hide" name="token" id="token" value="">
+                                    </form>
 
-                            </div><!-- Body-->
-
+                                </div><!-- Body-->
+                            <?php else: ?>
+                            <h1>check your email</h1>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
