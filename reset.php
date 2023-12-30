@@ -28,7 +28,7 @@
 // echo "hello $user welcome to the reset page";
 
 
-$token = '';
+$token = '3bbce3b496d562a766e6e97ca15a06af9c431179295d0d8288ca880115716a2feec2d50dd3ab1313ec1d28ae931c7f15b67c';
 
 $stmt = mysqli_prepare($conn, "SELECT  user_name , user_email , token FROM users WHERE token =?");
 
@@ -44,8 +44,16 @@ mysqli_stmt_close($stmt);
 
 // echo $user;
 
-if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
-    redirect('index');
+// if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
+//     redirect('index');
+// }
+
+if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
+
+    if ($_POST['password'] === $_POST['confirmPassword']) {
+        echo "password match ✅";
+    }
+
 }
 ?>
 
@@ -72,14 +80,14 @@ if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
-                                            <input id="password" name="password" placeholder="Enter password" class="form-control"  type="password">
+                                            <input id="password" name="password" placeholder="Enter password" class="form-control" type="password">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok color-blue"></i></span>
-                                            <input id="confirmPassword" name="confirmPassword" placeholder="Confirm password" class="form-control"  type="password">
+                                            <input id="confirmPassword" name="confirmPassword" placeholder="Confirm password" class="form-control" type="password">
                                         </div>
                                     </div>
 
