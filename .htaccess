@@ -1,15 +1,15 @@
-RewriteEngine on
+# RewriteEngine on
 
-RewriteRule ^(index|contact|registration|login|forgot_pass)$ $1.php [NC,L]
+# RewriteRule ^(index|contact|registration|login|forgot_pass)$ $1.php [NC,L]
 
-RewriteRule ^post/(\d+)$ post.php?p_id=$1 [NC,L]
+# RewriteRule ^post/(\d+)$ post.php?p_id=$1 [NC,L]
 
-RewriteRule ^category/(\d+)$ category.php?category=$1 [NC,L]
+# RewriteRule ^category/(\d+)$ category.php?category=$1 [NC,L]
 
 
 
-# Options +MultiViews
-# RewriteEngine On
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteRule ^([^\.]+)$ $1.php [NC,L]
+Options +MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
