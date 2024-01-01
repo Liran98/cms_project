@@ -149,7 +149,7 @@
                     }
                     $count = mysqli_num_rows($res);
                     if (!$count) {
-                        echo "<h1>No comments found</h1>";
+                        echo "<h1 class='bg-danger'>No comments found</h1>";
                     }
 
                     while ($row = mysqli_fetch_assoc($res)) {

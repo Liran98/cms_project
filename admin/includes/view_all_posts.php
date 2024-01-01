@@ -103,11 +103,11 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                     // $query .= "LEFT JOIN categories ON posts.posts_category_id = categories.cat_id";
 
 
-                    $curuser = $_SEESION['username'];
+                    // $curuser = $_SESSION['username'];
                     //? you can pull data from both tables
                     $query = "SELECT * FROM posts LEFT JOIN
                      categories ON posts.post_category_id
-                      = categories.cat_id WHERE user_name = '$curuser' ORDER BY
+                      = categories.cat_id  ORDER BY
                        posts.post_id DESC";
 
                     $res = mysqli_query($conn, $query);

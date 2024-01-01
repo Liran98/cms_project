@@ -8,9 +8,9 @@
 <?php
 
 
-if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
-    redirect('index');
-}
+// if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
+//     redirect('index');
+// }
 
 // $email = '';
 
@@ -48,7 +48,7 @@ if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
             if (mysqli_stmt_affected_rows($stmt) >= 1) {
 
-                redirect('CMS_TEMPLATE/login');
+                redirect('/CMS_TEMPLATE/login');
             }
 
             mysqli_stmt_close($stmt);
