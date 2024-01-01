@@ -7,7 +7,6 @@
 
 <?php
 
-$verified = false;
 
 if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
     redirect('index');
@@ -43,7 +42,7 @@ if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
         if ($stmt = mysqli_prepare($conn, "UPDATE users SET token = '',user_password='{$password}' WHERE user_email = ?")) {
 
-            mysqli_stmt_bind_param($stmt, "s", $_GET['token']);
+            mysqli_stmt_bind_param($stmt, "s", $_GET['email']);
 
             mysqli_stmt_execute($stmt);
 
@@ -54,7 +53,6 @@ if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
             mysqli_stmt_close($stmt);
 
-            $verified = true;
         }
     }
 }
@@ -62,7 +60,6 @@ if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
 <div class="container">
 
-    <?php if (!$verified) : ?>
 
         <div class="container">
             <div class="row">
@@ -109,12 +106,6 @@ if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
                 </div>
             </div>
         </div>
-    <?php else : ?>
-
-        <?php redirect('/CMS_TEMPLATE/login');  ?>
-
-
-    <?php endif; ?>
 
     <hr>
 

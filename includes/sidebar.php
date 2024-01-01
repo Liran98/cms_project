@@ -11,22 +11,23 @@ checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
 
 if (ifItIsMethod('post')) {
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if (isset($username) && isset($password)) {
-        login_user($username, $password);
-    } else {
-        redirect('/CMS_TEMPLATE/index');
-    }
+    if (isset($_POST['login'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        if (isset($username) && isset($password)) {
+            login_user($username, $password);
+        } else {
+            redirect('/CMS_TEMPLATE/index');
+        }
+        $id = uniqid();
 
-    $id = uniqid();
-
-    if (!$username) {
-        $error['username'] = 'invalid username';
-    }
-    if (!$password) {
-        $error['pass'] = 'invalid Password';
-        $error['pass'] = "<a href='forgot_pass.php?forgot=$id'>Forgot password?</a>";
+        if (!$username) {
+            $error['username'] = 'invalid username';
+        }
+        if (!$password) {
+            $error['pass'] = 'invalid Password';
+            $error['pass'] = "<a href='forgot_pass.php?forgot=$id'>Forgot password?</a>";
+        }
     }
 }
 ?>

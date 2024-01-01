@@ -66,7 +66,7 @@
                             <?php echo $post_date; ?>
                         </p>
                         <hr>
-                        <img width='200' class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
+                        <img width='200' class="img-responsive" src="images/<?php echo ImagePlaceHolder($post_image); ?>" alt="">
                         <hr>
                         <p>
                             <?php echo $post_content; ?>

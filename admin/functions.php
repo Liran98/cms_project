@@ -2,6 +2,18 @@
 
 <?php
 
+function ImagePlaceHolder($img = '')
+{
+    if (!$img) {
+        return '💥no image found💥';
+    } else {
+        return $img;
+    }
+}
+
+
+
+
 function insert_categories()
 {
     global $conn;
@@ -310,8 +322,8 @@ function find_all_categories()
             exit;
         }
 
-// //////////////////////////////////////////////
-        function ifItIsMethod($method=null)
+        // //////////////////////////////////////////////
+        function ifItIsMethod($method = null)
         {
             if ($_SERVER['REQUEST_METHOD'] == strtoupper($method)) {
                 return true;
@@ -328,12 +340,13 @@ function find_all_categories()
             }
         }
 
-        function checkIfUserIsloggedInANDredirect($redirect_location=null){
-            if(isLoggedin()){
+        function checkIfUserIsloggedInANDredirect($redirect_location = null)
+        {
+            if (isLoggedin()) {
                 redirect($redirect_location);
             }
         }
-/////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////
         function register_user($user, $email, $password)
         {
             global $conn;
@@ -389,14 +402,14 @@ function find_all_categories()
                     $_SESSION['lastname'] = $lastname;
                     $_SESSION['role'] = $role;
                     $_SESSION['id'] = $id;
-    
+
                     redirect("/CMS_TEMPLATE/admin");
                 } else {
                     return false;
                 }
             }
 
-           return true;
+            return true;
             // $password = crypt($password,$user_pass);
 
             //*if(password_verify($password,$user_pass)){ other way to check  , 
