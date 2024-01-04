@@ -8,15 +8,12 @@
 <?php
 
 
-// if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
-//     redirect('index');
-// }
 
 // $email = '';
 
 // $token = '3bbce3b496d562a766e6e97ca15a06af9c431179295d0d8288ca880115716a2feec2d50dd3ab1313ec1d28ae931c7f15b67c';
 
-$stmt = mysqli_prepare($conn, "SELECT  user_name , user_email , token FROM users WHERE token =?");
+$stmt = mysqli_prepare($conn, "SELECT  user_name,user_email,token FROM users WHERE token = ?");
 
 mysqli_stmt_bind_param($stmt, "s", $token);
 
@@ -28,8 +25,10 @@ mysqli_stmt_fetch($stmt);
 
 mysqli_stmt_close($stmt);
 
-// echo $user;
 
+if (!isset($_GET['token']) && !isset($_GET['email'])) {
+    redirect('index');
+}
 
 
 if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
@@ -40,7 +39,7 @@ if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
         $password =  password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-        if ($stmt = mysqli_prepare($conn, "UPDATE users SET token = '',user_password='{$password}' WHERE user_email = ?")) {
+        if ($stmt = mysqli_prepare($conn, "UPDATE users SET token = '$token',user_password='{$password}' WHERE user_email = ?")) {
 
             mysqli_stmt_bind_param($stmt, "s", $_GET['email']);
 
