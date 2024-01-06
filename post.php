@@ -4,6 +4,8 @@
 <!-- Navigation -->
 <?php include './includes/navigation.php'; ?>
 
+
+
 <!-- Blog Sidebar Widgets Column -->
 <?php include './includes/sidebar.php'; ?>
 <!-- Page Content -->
@@ -181,10 +183,23 @@
                                     <small><?php echo $date; ?></small>
                                 </h4>
                                 <?php echo $content; ?>
+
                             </div>
                         </div>
                         <hr>
+                        <div class="row">
+                            <p class="pull-right">
+                                <a class="like" href="">
+                                    <spam class="glyphicon glyphicon-thumbs-up "></spam> like
+                            </p>
+                            </a>
+                        </div>
+                        <div class="row">
+                       
+                            <p class="pull-right">likes: 10</p>
+                        </div>
 
+                        <div class="clearfix"></div>
             <?php
                     }
                 }
@@ -201,7 +216,34 @@
         </div>
     </div>
 </div>
+<?php
+if(isset($_POST['liked'])){
+ echo "<h1>it works</h1>";
+}
 
+
+?>
 
 
 <?php include './includes/footer.php'; ?>
+
+
+<script>
+    $(document).ready(function() {
+
+        let post_id = <?php $id; ?>
+
+        let user_id = 82; //liran717
+
+      $.ajax({
+        url:"/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
+        type:'POST',
+        data:{
+           'liked':1,
+           'post_id':post_id, 
+           'user_id':user_id
+        }
+
+      })
+    });
+</script>
