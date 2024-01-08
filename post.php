@@ -105,9 +105,8 @@
 
                             // $query_comment = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $id";
                             // $res_comment = mysqli_query($conn, $query_comment);
-
+                            redirect('/CMS_TEMPLATE/post/' . $id);
                         }
-                        header("Location: post.php?p_id=$id");
                     }
                     ?>
 
@@ -189,14 +188,20 @@
                         <hr>
                         <div class="row">
                             <p class="pull-right">
-                                <a class="like" href="">
-                                    <spam class="glyphicon glyphicon-thumbs-up "></spam> like
+                                <a class="like" href="#">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span> like
                             </p>
                             </a>
                         </div>
                         <div class="row">
-                       
-                            <p class="pull-right">likes: 10</p>
+                            <p class="pull-left">
+                                <a class="dislike" href="#">
+                                    <span class="glyphicon glyphicon-thumbs-down"></span> Dislike
+                            </p>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <p class="pull-right">likes:</p>
                         </div>
 
                         <div class="clearfix"></div>
@@ -207,43 +212,91 @@
                 header("Location: index.php");
             }
             ?>
-
-
-
-
-
-
         </div>
     </div>
 </div>
 <?php
-if(isset($_POST['liked'])){
- echo "<h1>it works</h1>";
+//name liked from ajax
+if (isset($_POST['liked'])) {
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+
+    //FETCHING POST
+    $query_post = "SELECT * FROM posts WHERE post_id =$post_id";
+    $res = mysqli_query($conn, $query_post);
+
+    if (!$res) {
+        die(mysqli_error($conn));
+    }
+
+    $row = mysqli_fetch_array($res);
+    $likes = $row['post_likes'];
+    //UPDATE POST WITH LIKES
+    mysqli_query($conn, "UPDATE posts SET post_likes = $likes + 1 WHERE post_id =$id");
+
+    //CREATE LIKES FOR POST
+
+    mysqli_query($conn, "INSERT INTO likes(user_id,post_id) VALUES($user_id,$post_id)");
+    exit();
 }
 
 
+if (isset($_POST['unliked'])) {
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+    //1 fetching likes
+    $query_post = "SELECT * FROM posts WHERE post_id =$post_id";
+    $res = mysqli_query($conn, $query_post);
+
+    $row = mysqli_fetch_array($res);
+    $likes = $row['post_likes'];
+
+    //2 deleting likes
+    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$post_id AND user_id= $user_id");
+
+
+    //3 updating likes
+    mysqli_query($conn, "UPDATE posts SET post_likes = $likes - 1 WHERE post_id =$id");
+
+    exit();
+}
 ?>
 
-
 <?php include './includes/footer.php'; ?>
-
 
 <script>
     $(document).ready(function() {
 
-        let post_id = <?php $id; ?>
 
-        let user_id = 82; //liran717
+        let post_id = <?php echo $post_id; ?>
 
-      $.ajax({
-        url:"/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
-        type:'POST',
-        data:{
-           'liked':1,
-           'post_id':post_id, 
-           'user_id':user_id
-        }
+        let user_id = <?php echo $user_id; ?>
 
-      })
+        $('.like').click(function() {
+            $.ajax({
+                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $post_id; ?>",
+                type: 'post',
+                data: {
+                    'liked': 1,
+                    'post_id': post_id,
+                    'user_id': user_id
+                }
+            });
+        });
+
+
+        $('.dislike').click(function() {
+            $.ajax({
+                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $post_id; ?>",
+                type: 'post',
+                data: {
+                    'unliked':1,
+                    'post_id': post_id,
+                    'user_id': user_id
+                }
+
+            });
+        });
+
     });
 </script>

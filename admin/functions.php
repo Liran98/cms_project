@@ -116,8 +116,8 @@ function find_all_categories()
 
 
                 $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_user,
-    post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_views_count)";
-                $query .= " VALUES ($post_category_id,'$post_title','$post_user','$post_user',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0)";
+    post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_views_count,post_likes)";
+                $query .= " VALUES ($post_category_id,'$post_title','$post_user','$post_user',now(),'$post_image','$post_content','$post_tags',0,'$post_status',0,0)";
 
                 $res = mysqli_query($conn, $query);
                 confirmQuery($res);

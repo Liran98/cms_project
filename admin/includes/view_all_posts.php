@@ -88,6 +88,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                      <th>edit</th>
                      <th>published</th>
                      <th>draft</th>
+                     <th>likes</th>
 
                  </tr>
              </thead>
@@ -104,6 +105,8 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
 
 
                     // $curuser = $_SESSION['username'];
+
+                    
                     //? you can pull data from both tables
                     $query = "SELECT * FROM posts LEFT JOIN
                      categories ON posts.post_category_id
@@ -122,6 +125,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                         $post_user = $row['post_user'];
                         $author = $row['post_author'];
                         $title = $row['post_title'];
+                        $likes = $row['post_likes'];
                         //id
                         $post_category_id = $row['post_category_id'];
                         $status = $row['post_status'];
@@ -199,7 +203,7 @@ post_date,post_image,post_content,post_tags,post_comment_count,post_status,post_
                          <td class="bg-success"><a  href="posts.php?source=edit_post&p_id=<?php echo $id; ?>">📝</a></td>
                          <td><a href="posts.php?pub=<?php echo $id; ?>">published</a></td>
                          <td><a href="posts.php?draft=<?php echo $id; ?>">draft</a></td>
-
+                         <td><?php echo $likes; ?></td>
                      </tr>
                  <?php
                     }
