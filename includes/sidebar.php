@@ -5,7 +5,7 @@ $error = [
     'pass' => ''
 ];
 
-checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
+// checkIfUserIsloggedInANDredirect('/CMS_TEMPLATE/admin');
 
 
 

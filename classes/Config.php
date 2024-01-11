@@ -1,4 +1,5 @@
 <?php
+//used with mailtrap 
 class Config
 {
     const SMTP_HOST ='sandbox.smtp.mailtrap.io';

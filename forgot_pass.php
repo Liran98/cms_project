@@ -47,7 +47,8 @@ if (ifItIsMethod('post')) {
             $mail = new PHPMailer();
             // echo get_class($mail);
             $mail->isSMTP();
-            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;   
+                                 //class config from config.php config::                   //Enable verbose debug output
             $mail->Host       = Config::SMTP_HOST;                     //Set the SMTP server to send through
             $mail->Username   = Config::SMTP_USER;                     //SMTP username
             $mail->Password   = Config::SMTP_PASSWORD;                               //SMTP password

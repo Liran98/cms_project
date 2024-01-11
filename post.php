@@ -188,14 +188,14 @@
                         <hr>
                         <div class="row">
                             <p class="pull-right">
-                                <a class="like" href="#">
+                                <a class="like" href="">
                                     <span class="glyphicon glyphicon-thumbs-up"></span> like
                             </p>
                             </a>
                         </div>
                         <div class="row">
                             <p class="pull-left">
-                                <a class="dislike" href="#">
+                                <a class="dislike" href="">
                                     <span class="glyphicon glyphicon-thumbs-down"></span> Dislike
                             </p>
                             </a>
@@ -218,11 +218,10 @@
 <?php
 //name liked from ajax
 if (isset($_POST['liked'])) {
-    $post_id = $_POST['post_id'];
-    $user_id = $_POST['user_id'];
-
+    $user_id = $_POST['uid'];
+    $post_id = $_POST['pid'];
     //FETCHING POST
-    $query_post = "SELECT * FROM posts WHERE post_id =$post_id";
+    $query_post = "SELECT * FROM posts WHERE post_id =$id";
     $res = mysqli_query($conn, $query_post);
 
     if (!$res) {
@@ -236,23 +235,23 @@ if (isset($_POST['liked'])) {
 
     //CREATE LIKES FOR POST
 
-    mysqli_query($conn, "INSERT INTO likes(user_id,post_id) VALUES($user_id,$post_id)");
+    mysqli_query($conn,"INSERT INTO likes(user_id,post_id) VALUES($user_id,$id)");
     exit();
 }
 
 
 if (isset($_POST['unliked'])) {
-    $post_id = $_POST['post_id'];
-    $user_id = $_POST['user_id'];
+    $user_id = $_POST['uid'];
+    $post_id = $_POST['pid'];
     //1 fetching likes
-    $query_post = "SELECT * FROM posts WHERE post_id =$post_id";
+    $query_post = "SELECT * FROM posts WHERE post_id =$id";
     $res = mysqli_query($conn, $query_post);
 
     $row = mysqli_fetch_array($res);
     $likes = $row['post_likes'];
 
     //2 deleting likes
-    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$post_id AND user_id= $user_id");
+    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$id AND user_id= $user_id");
 
 
     //3 updating likes
@@ -265,38 +264,47 @@ if (isset($_POST['unliked'])) {
 <?php include './includes/footer.php'; ?>
 
 <script>
-    $(document).ready(function() {
+    // $(document).ready(function() {
+    //     var post_id = <?php echo $id; ?>;
+    //     var user_id = <?php echo $_SESSION['username']; ?>
+    //     $('.like').click(function(e) {
+            
+    //         e.preventDefault();
+    //         $.ajax({
+    //             url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
+    //             type: 'post',
+    //             data: {
+    //                 liked: 1,
+    //                 pid : post_id,
+    //                 uid: user_id, //hardcoded user
+    //             }
+    //         });
+           
+    //     });
+
+    //     $('.dislike').click(function(e) {
+    //         e.preventDefault();
+    //         $.ajax({
+    //             url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
+    //             type: "post",
+    //             data: {
+    //                 unliked: 1,
+    //                 pid : post_id,
+    //                 uid: user_id,
+    //             }
+    //         })
+    //     });
+    // });
 
 
-        let post_id = <?php echo $post_id; ?>
+    const like = document.querySelector('.like');
 
-        let user_id = <?php echo $user_id; ?>
-
-        $('.like').click(function() {
-            $.ajax({
-                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $post_id; ?>",
-                type: 'post',
-                data: {
-                    'liked': 1,
-                    'post_id': post_id,
-                    'user_id': user_id
-                }
-            });
+    like.addEventListener('click', function (e){
+         e.preventDefault();
+         
+        fetch("/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>")
+        .then(function(data){
+          console.log(data);
         });
-
-
-        $('.dislike').click(function() {
-            $.ajax({
-                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $post_id; ?>",
-                type: 'post',
-                data: {
-                    'unliked':1,
-                    'post_id': post_id,
-                    'user_id': user_id
-                }
-
-            });
-        });
-
-    });
+         });
 </script>
