@@ -186,125 +186,146 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <p class="pull-right">
-                                <a class="like" href="">
-                                    <span class="glyphicon glyphicon-thumbs-up"></span> like
-                            </p>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <p class="pull-left">
-                                <a class="dislike" href="">
-                                    <span class="glyphicon glyphicon-thumbs-down"></span> Dislike
-                            </p>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <p class="pull-right">likes:</p>
-                        </div>
 
-                        <div class="clearfix"></div>
-            <?php
+                <?php
                     }
                 }
-            } else {
-                header("Location: index.php");
-            }
-            ?>
+                ?>
+                <?php
+                //name liked from ajax
+                if (isset($_POST['liked'])) {
+                    $user_id = $_POST['uid'];
+                    $post_id = $_POST['pid'];
+                    //FETCHING POST
+                    $query_post = "SELECT * FROM posts WHERE post_id =$id";
+                    $res = mysqli_query($conn, $query_post);
+
+                    if (!$res) {
+                        die(mysqli_error($conn));
+                    }
+
+                    $row = mysqli_fetch_array($res);
+                    $likes = $row['post_likes'];
+                    //UPDATE POST WITH LIKES
+                    mysqli_query($conn, "UPDATE posts SET post_likes = $likes + 1 WHERE post_id =$id");
+
+                    //CREATE LIKES FOR POST
+
+                    mysqli_query($conn, "INSERT INTO likes(user_id,post_id) VALUES($user_id,$id)");
+                    exit();
+                }
+
+
+                if (isset($_POST['unliked'])) {
+                    $user_id = $_POST['uid'];
+                    $post_id = $_POST['pid'];
+                    //1 fetching likes
+                    $query_post = "SELECT * FROM posts WHERE post_id =$id";
+                    $res = mysqli_query($conn, $query_post);
+
+                    $row = mysqli_fetch_array($res);
+                    $likes = $row['post_likes'];
+
+                    //2 deleting likes
+                    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$id AND user_id= $user_id");
+
+
+                    //3 updating likes
+                    mysqli_query($conn, "UPDATE posts SET post_likes = $likes - 1 WHERE post_id =$id");
+
+                    exit();
+                }
+                ?>
+                <div class="row">
+
+                    <p class="pull-right text-success">
+
+
+                        <a class="like" href="">
+                            <p class='all_likes'>
+                                <?php
+                                if (isset($_GET['showlikes'])) {
+                                        $pid = $_GET['p_id'];
+                                        $res = mysqli_query($conn, "SELECT * FROM likes WHERE post_id = $pid ");
+                                        $likes = mysqli_num_rows($res);
+                                        echo $likes;
+                                  
+                                }
+                                ?>
+                            </p>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                    </p>
+                    </a>
+                </div>
+                <div class="row">
+                    <p class="pull-left text-danger">
+
+                        <a class="dislike" href="">
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                    </p>
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
         </div>
     </div>
 </div>
 <?php
-//name liked from ajax
-if (isset($_POST['liked'])) {
-    $user_id = $_POST['uid'];
-    $post_id = $_POST['pid'];
-    //FETCHING POST
-    $query_post = "SELECT * FROM posts WHERE post_id =$id";
-    $res = mysqli_query($conn, $query_post);
-
-    if (!$res) {
-        die(mysqli_error($conn));
-    }
-
-    $row = mysqli_fetch_array($res);
-    $likes = $row['post_likes'];
-    //UPDATE POST WITH LIKES
-    mysqli_query($conn, "UPDATE posts SET post_likes = $likes + 1 WHERE post_id =$id");
-
-    //CREATE LIKES FOR POST
-
-    mysqli_query($conn,"INSERT INTO likes(user_id,post_id) VALUES($user_id,$id)");
-    exit();
-}
-
-
-if (isset($_POST['unliked'])) {
-    $user_id = $_POST['uid'];
-    $post_id = $_POST['pid'];
-    //1 fetching likes
-    $query_post = "SELECT * FROM posts WHERE post_id =$id";
-    $res = mysqli_query($conn, $query_post);
-
-    $row = mysqli_fetch_array($res);
-    $likes = $row['post_likes'];
-
-    //2 deleting likes
-    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$id AND user_id= $user_id");
-
-
-    //3 updating likes
-    mysqli_query($conn, "UPDATE posts SET post_likes = $likes - 1 WHERE post_id =$id");
-
-    exit();
-}
+            } else {
+                header("Location: index.php");
+            }
 ?>
-
 <?php include './includes/footer.php'; ?>
 
 <script>
-    // $(document).ready(function() {
-    //     var post_id = <?php echo $id; ?>;
-    //     var user_id = <?php echo $_SESSION['username']; ?>
-    //     $('.like').click(function(e) {
-            
-    //         e.preventDefault();
-    //         $.ajax({
-    //             url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
-    //             type: 'post',
-    //             data: {
-    //                 liked: 1,
-    //                 pid : post_id,
-    //                 uid: user_id, //hardcoded user
-    //             }
-    //         });
-           
-    //     });
+    //close the php with ; otherwise wont work  
+    let post_id = <?php echo $id; ?>;
+    let user_id = <?php echo $_SESSION['username']; ?>;
+    $(document).ready(function() {
+        $('.like').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
+                type: 'post',
+                data: {
+                    liked: 1,
+                    pid: post_id,
+                    uid: user_id, //hardcoded user
+                }
+            });
 
-    //     $('.dislike').click(function(e) {
-    //         e.preventDefault();
-    //         $.ajax({
-    //             url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
-    //             type: "post",
-    //             data: {
-    //                 unliked: 1,
-    //                 pid : post_id,
-    //                 uid: user_id,
-    //             }
-    //         })
-    //     });
-    // });
-
-
-    const like = document.querySelector('.like');
-
-    like.addEventListener('click', function (e){
-         e.preventDefault();
-         
-        fetch("/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>")
-        .then(function(data){
-          console.log(data);
         });
-         });
+
+        $('.dislike').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
+                type: "post",
+                data: {
+                    unliked: 1,
+                    pid: post_id,
+                    uid: user_id,
+                }
+            })
+        });
+    });
+
+    let all_likes = document.querySelector('.all_likes');
+
+    function likes() {
+        fetch(`/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>&showlikes`)
+            .then(function(res) {
+                return res.json();
+            }).then(function(data) {
+                all_likes.textContent = data;
+                return data;
+            });
+
+    }
+
+
+
+    setInterval(function() {
+        likes();
+    }, 2500);
 </script>
