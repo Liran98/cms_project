@@ -340,6 +340,27 @@ function find_all_categories()
             }
         }
 
+        function query($query)
+        {
+            global $conn;
+            return mysqli_query($conn, $query);
+        }
+
+        function loggedInUserId()
+        {
+            if (isLoggedin()) {
+                $user = $_SESSION['username'];
+                $result = query("SELECT * FROM users WHERE user_name ='$user'");
+                $row = mysqli_fetch_array($result);
+                $curUserId = $row['user_id'];
+
+                if (mysqli_num_rows($result) >= 1) {
+                    return  $curUserId;
+                }
+            }
+            return false;
+        }
+
         function checkIfUserIsloggedInANDredirect($redirect_location = null)
         {
             if (isLoggedin()) {

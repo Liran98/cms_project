@@ -237,29 +237,33 @@
                 }
                 ?>
                 <div class="row">
-
                     <p class="pull-right text-success">
-
-
-                        <a class="like" href="">
-                            <p class='all_likes'>
-                                <?php
-                                if (isset($_GET['showlikes'])) {
-                                        $pid = $_GET['p_id'];
-                                        $res = mysqli_query($conn, "SELECT * FROM likes WHERE post_id = $pid ");
-                                        $likes = mysqli_num_rows($res);
-                                        echo $likes;
-                                  
+                    <?php
+                                $res = mysqli_query($conn, "SELECT post_likes FROM posts WHERE post_id = $id ");
+                                $likes = mysqli_fetch_assoc($res);
+                                $all_likes = $likes['post_likes'];
+                             
+                                if($all_likes >= 0 ){
+                                    echo $all_likes;
+                                }else{
+                                    echo "0";
                                 }
                                 ?>
-                            </p>
+
+                        <a class="like" href="">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                     </p>
                     </a>
                 </div>
                 <div class="row">
                     <p class="pull-left text-danger">
-
+                   <?php
+                    if($all_likes <= 0 ){
+                        echo $all_likes;
+                    }else{
+                        echo "0";
+                    }
+                    ?>
                         <a class="dislike" href="">
                             <span class="glyphicon glyphicon-thumbs-down"></span>
                     </p>
@@ -310,22 +314,19 @@
         });
     });
 
-    let all_likes = document.querySelector('.all_likes');
+    // let all_likes = document.querySelector('.all_likes');
 
-    function likes() {
-        fetch(`/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>&showlikes`)
-            .then(function(res) {
-                return res.json();
-            }).then(function(data) {
-                all_likes.textContent = data;
-                return data;
-            });
+    // function likes() {
+    //     fetch(`/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>&showlikes`)
+    //         .then(function(res) {
+    //             return res.json();
+    //         }).then(function(data) {
+    //             all_likes.textContent = data;
+    //             return data;
+    //         });
 
-    }
-
-
-
-    setInterval(function() {
-        likes();
-    }, 2500);
+    // }
+    // setInterval(function() {
+    //     likes();
+    // }, 2500);
 </script>

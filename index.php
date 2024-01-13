@@ -66,7 +66,9 @@
                 // $cat_title = $row['cat_title'];
             ?>
                 <h1 class="page-header">
-                   <?php  echo $post_date; ?>
+                   <?php  
+                   echo $post_date; 
+                   ?>
                     <small></small>
                 </h1>
 
