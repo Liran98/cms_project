@@ -18,6 +18,7 @@
 
             <?php
 
+          
 
             if (isset($_GET['p_id'])) {
                 $id = $_GET['p_id'];
@@ -237,37 +238,19 @@
                 }
                 ?>
                 <div class="row">
-                    <p class="pull-right text-success">
-                    <?php
-                                $res = mysqli_query($conn, "SELECT post_likes FROM posts WHERE post_id = $id ");
-                                $likes = mysqli_fetch_assoc($res);
-                                $all_likes = $likes['post_likes'];
-                             
-                                if($all_likes >= 0 ){
-                                    echo $all_likes;
-                                }else{
-                                    echo "0";
-                                }
-                                ?>
-
-                        <a class="like" href="">
-                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <p class="pull-right">
+                        
+                        <a href="" class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like';?>">
+                            <span class="<?php echo userLikedPost($post_id) ? 'glyphicon glyphicon-thumbs-down' :'glyphicon glyphicon-thumbs-up' ?>">
+                            </span>
+                            <?php echo userLikedPost($post_id) ? 'Dislike' : 'Like'; ?>
+                        </a>
                     </p>
-                    </a>
                 </div>
                 <div class="row">
-                    <p class="pull-left text-danger">
-                   <?php
-                    if($all_likes <= 0 ){
-                        echo $all_likes;
-                    }else{
-                        echo "0";
-                    }
-                    ?>
-                        <a class="dislike" href="">
-                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                    <p class="pull-right">
+                     like : 10
                     </p>
-                    </a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -284,10 +267,10 @@
 <script>
     //close the php with ; otherwise wont work  
     let post_id = <?php echo $id; ?>;
-    let user_id = <?php echo $_SESSION['username']; ?>;
+    let user_id = <?php echo loggedInUserId(); ?>;
     $(document).ready(function() {
         $('.like').click(function(e) {
-            e.preventDefault();
+            console.log("clicked");
             $.ajax({
                 url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
                 type: 'post',
@@ -301,7 +284,6 @@
         });
 
         $('.dislike').click(function(e) {
-            e.preventDefault();
             $.ajax({
                 url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
                 type: "post",
@@ -313,20 +295,6 @@
             })
         });
     });
-
-    // let all_likes = document.querySelector('.all_likes');
-
-    // function likes() {
-    //     fetch(`/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>&showlikes`)
-    //         .then(function(res) {
-    //             return res.json();
-    //         }).then(function(data) {
-    //             all_likes.textContent = data;
-    //             return data;
-    //         });
-
-    // }
-    // setInterval(function() {
-    //     likes();
-    // }, 2500);
 </script>
+
+<!-- // mysqli_stmt_free_result($stmt); -->

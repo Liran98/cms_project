@@ -333,13 +333,13 @@ function find_all_categories()
 
         function isLoggedin()
         {
-            if (isset($_SESSION['role'])) {
+            if (isset($_SESSION['username'])) {
                 return true;
             } else {
                 return false;
             }
         }
-
+////////////////////////////////////////////////////////////////////////////////
         function query($query)
         {
             global $conn;
@@ -348,19 +348,27 @@ function find_all_categories()
 
         function loggedInUserId()
         {
+            //if true
             if (isLoggedin()) {
                 $user = $_SESSION['username'];
                 $result = query("SELECT * FROM users WHERE user_name ='$user'");
-                $row = mysqli_fetch_array($result);
+                confirmQuery($result);
+                $row = mysqli_fetch_assoc($result);
                 $curUserId = $row['user_id'];
-
-                if (mysqli_num_rows($result) >= 1) {
-                    return  $curUserId;
-                }
+                        
+                return mysqli_num_rows($result) >= 1 ? $curUserId : false;
+               
             }
             return false;
         }
 
+        function userLikedPost($post_id='')
+        {
+           $res =  query("SELECT * FROM likes WHERE user_id=" .loggedInUserId(). " AND post_id = $post_id");
+           confirmQuery($res);
+           return mysqli_num_rows($res) >= 1 ? true : false;
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////
         function checkIfUserIsloggedInANDredirect($redirect_location = null)
         {
             if (isLoggedin()) {
