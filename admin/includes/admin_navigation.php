@@ -11,22 +11,29 @@
      </div>
      <!-- Top Menu Items -->
      <ul class="nav navbar-right top-nav">
-        <!-- //? $count_users coming from admin index.php  -->
-     <!-- <li><a href="">Users Online: <?php //echo $count_online; ?> </a></li> -->
-     <li><a href="">Users Online: <span class="usersonline"></span></a></li>
+         <!-- //? $count_users coming from admin index.php  -->
+         <!-- <li><a href="">Users Online: <?php //echo $count_online; 
+                                            ?> </a></li> -->
+         <li><a href="">Users Online: <span class="usersonline"></span></a></li>
          <li><a href="../index.php">🏠</a></li>
-       
 
+         <?php
+
+
+
+
+
+            ?>
 
 
          <li class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
-             <?php
-             if(isset($_SESSION['username'])){
-                echo $_SESSION['username'];
-             }
-             ?>
-             <b class="caret"></b></a>
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                 <?php
+                    if (isset($_SESSION['username'])) {
+                        echo $_SESSION['username'];
+                    }
+                    ?>
+                 <b class="caret"></b></a>
              <ul class="dropdown-menu">
                  <li>
                      <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -39,18 +46,18 @@
          </li>
      </ul>
 
-
-
-
-
-
-
      <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
          <ul class="nav navbar-nav side-nav">
-             <li>
-                 <a href="./index.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+             <li class="">
+                 <a href="./index.php"><i class="fa fa-fw fa-link"></i> my Data</a>
              </li>
+             <?php if(is_admin()): ?>
+             <li class="">
+                 <a href="./dashboard.php"><i class="fa fa-fw fa-dashboard "></i> Dashboard</a>
+             </li>
+             <?php endif; ?>
+
              <li>
                  <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> posts <i class="fa fa-fw fa-caret-down"></i></a>
                  <ul id="posts_dropdown" class="collapse">
@@ -73,7 +80,7 @@
                  <a href="comments.php"><i class="fa fa-fw fa-file"></i>comments</a>
              </li>
 
-             
+
              <li>
                  <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> users <i class="fa fa-fw fa-caret-down"></i></a>
                  <ul id="demo" class="collapse">

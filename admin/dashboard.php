@@ -9,8 +9,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        welcome to Admin
-                        <small> 👤<?php echo strtoupper(get_user_name()); ?></small>
+                        welcome to DashBoard
+                        <small> <?php echo $_SESSION['username']; ?></small>
                     </h1>
                     <h1>
 
@@ -18,9 +18,6 @@
                 </div>
             </div>
             <!-- /.row -->
-
-
-           
 
             <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -34,7 +31,7 @@
                                     <div class='huge '>
                                         <span class="posts_online">
                                             <?php
-                                            echo $count_posts = get_user_posts();
+                                            echo $count_posts =  recordCount('posts');
                                             ?>
                                         </span>
                                     </div>

@@ -33,7 +33,7 @@
                     $contact_class = '';
 
                     //? gets the name of the php file
-                    $pageName =  basename($_SERVER['PHP_SELF']);
+                    $pageName = basename($_SERVER['PHP_SELF']);
 
                     $registration = 'registration.php';
                     $contact = 'contact.php';

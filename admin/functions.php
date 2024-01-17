@@ -246,6 +246,7 @@ function find_all_categories()
             return mysqli_real_escape_string($conn, trim($string));
         }
 
+       
 
         function recordCount($table)
         {
@@ -264,20 +265,37 @@ function find_all_categories()
         }
 
 
-        function is_admin($username = '')
+        function is_admin()
         {
-            global $conn;
+            if (isLoggedin()) {
+                $res = query("SELECT user_role FROM users WHERE user_id =" . $_SESSION['id'] . "");
+                $row = mysqli_fetch_assoc($res);
 
-            $query = "SELECT * FROM users WHERE user_name = '$username'";
-            $res = mysqli_query($conn, $query);
-
-            $row = mysqli_fetch_assoc($res);
-
-            if ($row['user_role'] == 'admin') {
-                return true;
-            } else {
-                return false;
+                if ($row['user_role'] == 'admin') {
+                    return true;
+                } else {
+                    return false;
+                }
             }
+            return false;
+        }
+
+        function get_user_posts(){
+            $query = query("SELECT * FROM posts WHERE user_id =". $_SESSION['id']."");
+
+            return mysqli_num_rows($query);
+        }
+      
+        // get results from database
+        function fetchRecords($result)
+        {
+            return mysqli_fetch_array($result);
+        }
+
+        function get_user_name()
+        {
+            return isset($_SESSION['username']) ? $_SESSION['username'] : null;
+            
         }
 
 
