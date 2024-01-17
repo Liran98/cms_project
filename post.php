@@ -18,7 +18,7 @@
 
             <?php
 
-          
+
 
             if (isset($_GET['p_id'])) {
                 $id = $_GET['p_id'];
@@ -237,22 +237,45 @@
                     exit();
                 }
                 ?>
-                <div class="row">
-                    <p class="pull-right">
-                        
-                        <a href="" class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like';?>">
-                            <span class="<?php echo userLikedPost($post_id) ? 'glyphicon glyphicon-thumbs-down' :'glyphicon glyphicon-thumbs-up' ?>">
-                            </span>
-                            <?php echo userLikedPost($post_id) ? 'Dislike' : 'Like'; ?>
-                        </a>
-                    </p>
-                </div>
-                <div class="row">
-                    <p class="pull-right">
-                     like : 10
-                    </p>
-                </div>
+                <?php if (isLoggedin()) : ?>
 
+                    <div class="row">
+                        <p class="pull-right">
+
+                            <a href=""
+                             data-toggle="tooltip" data-placement="right" title="<?php echo userLikedPost($post_id) ? 'i liked this before' : 'you can like this post' ?>"
+                             class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?>">
+                                <span class="<?php echo userLikedPost($post_id) ? 'glyphicon glyphicon-thumbs-down' : 'glyphicon glyphicon-thumbs-up' ?>">
+                                </span>
+                                <?php echo userLikedPost($post_id) ? 'Dislike' : 'Like'; ?>
+                                
+                            </a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="pull-right">
+
+                            Likes : <?php
+                                    echo getPostLikes($id);
+                                    ?>
+                        </p>
+                    </div>
+                <?php else : ?>
+                   
+                    <div class="row">
+                        <p class="pull-right">
+
+                            Likes : <?php
+                                    echo getPostLikes($id);
+                                    ?>
+                        </p>
+                    </div>
+
+                    <a  class="text-center" href="/CMS_TEMPLATE/login">
+                        You need to <strong>login</strong> to like
+                        the post 👤
+                    </a>
+                <?php endif; ?>
                 <div class="clearfix"></div>
         </div>
     </div>
@@ -269,6 +292,10 @@
     let post_id = <?php echo $id; ?>;
     let user_id = <?php echo loggedInUserId(); ?>;
     $(document).ready(function() {
+
+$(['data-target' = 'tooltip']).tooltip();
+
+
         $('.like').click(function(e) {
             console.log("clicked");
             $.ajax({
@@ -280,7 +307,6 @@
                     uid: user_id, //hardcoded user
                 }
             });
-
         });
 
         $('.dislike').click(function(e) {
