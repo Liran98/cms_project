@@ -246,7 +246,7 @@ function find_all_categories()
             return mysqli_real_escape_string($conn, trim($string));
         }
 
-       
+
 
         function recordCount($table)
         {
@@ -280,12 +280,46 @@ function find_all_categories()
             return false;
         }
 
-        function get_user_posts(){
-            $query = query("SELECT * FROM posts WHERE user_id =". $_SESSION['id']."");
-
-            return mysqli_num_rows($query);
+        function get_all_user_posts()
+        {
+            $uname = $_SESSION['username'];
+            $query =  query("SELECT * FROM posts WHERE post_user ='$uname'");
+            confirmQuery($query);
+            return $query;
         }
-      
+
+        function get_all_posts_user_comments()
+        {
+            $uname= $_SESSION['username'];
+            $query = query("SELECT * FROM posts INNER JOIN comments ON posts.post_id = comments.comment_post_id WHERE posts.post_user = '$uname'");
+            confirmQuery($query);
+            return $query;
+        }
+
+        function get_all_user_cat(){
+            $uid = $_SESSION['id'];
+            $query = query("SELECT * FROM categories WHERE user_id = $uid");
+            confirmQuery($query);
+            return $query;
+        }
+        function get_all_user_published_posts(){
+            $uname = $_SESSION['username'];
+            $query = query("SELECT * FROM posts WHERE post_user = '$uname' AND post_status = 'published'");
+            confirmQuery($query);
+            return $query;
+        }
+        function get_all_user_draft_posts(){
+            $uname = $_SESSION['id'];
+            $query = query("SELECT * FROM posts WHERE post_user = '$uname' AND post_status = 'draft'");
+            confirmQuery($query);
+            return $query;
+        }
+
+        function count_records($res)
+        {
+            return mysqli_num_rows($res);
+        }
+
         // get results from database
         function fetchRecords($result)
         {
@@ -295,7 +329,6 @@ function find_all_categories()
         function get_user_name()
         {
             return isset($_SESSION['username']) ? $_SESSION['username'] : null;
-            
         }
 
 
@@ -469,6 +502,6 @@ function find_all_categories()
             // $password = crypt($password,$user_pass);
 
             //*if(password_verify($password,$user_pass)){ other way to check  , 
-            //  if($username === $user  && $password === $user_pass && $role === 'admin'){
+            //* if($username === $user  && $password === $user_pass && $role === 'admin'){
         }
             ?>
