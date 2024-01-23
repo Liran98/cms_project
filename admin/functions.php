@@ -290,30 +290,54 @@ function find_all_categories()
 
         function get_all_posts_user_comments()
         {
-            $uname= $_SESSION['username'];
+            $uname = $_SESSION['username'];
             $query = query("SELECT * FROM posts INNER JOIN comments ON posts.post_id = comments.comment_post_id WHERE posts.post_user = '$uname'");
             confirmQuery($query);
             return $query;
         }
 
-        function get_all_user_cat(){
+        function get_all_user_cat()
+        {
             $uid = $_SESSION['id'];
             $query = query("SELECT * FROM categories WHERE user_id = $uid");
             confirmQuery($query);
             return $query;
         }
-        function get_all_user_published_posts(){
+        function get_all_user_published_posts()
+        {
             $uname = $_SESSION['username'];
             $query = query("SELECT * FROM posts WHERE post_user = '$uname' AND post_status = 'published'");
             confirmQuery($query);
             return $query;
         }
-        function get_all_user_draft_posts(){
+        function get_all_user_draft_posts()
+        {
             $uname = $_SESSION['id'];
             $query = query("SELECT * FROM posts WHERE post_user = '$uname' AND post_status = 'draft'");
             confirmQuery($query);
             return $query;
         }
+        function get_all_user_unapproved_comments()
+        {
+            global $conn;
+            $uname = $_SESSION['username'];
+            $query ="SELECT * FROM posts INNER JOIN comments On posts.post_id = comments.comment_post_id";
+            $query .= " WHERE comments.comment_status = 'unapproved' AND posts.post_user = '$uname'";
+            $query = mysqli_query($conn, $query);
+            confirmQuery($query);
+            return $query;
+        }
+        function get_all_user_approved_comments()
+        {
+            global $conn;
+            $uname = $_SESSION['username'];
+            $query ="SELECT * FROM posts INNER JOIN comments On posts.post_id = comments.comment_post_id";
+            $query .= " WHERE comments.comment_status = 'approved' AND posts.post_user = '$uname'";
+            $query = mysqli_query($conn, $query);
+            confirmQuery($query);
+            return $query;
+        }
+       
 
         function count_records($res)
         {

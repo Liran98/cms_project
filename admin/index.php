@@ -61,7 +61,7 @@
                                 <div class="col-xs-9 text-right">
                                     <div class='huge'>
                                         <?php
-                                        echo $count_comment= count_records(get_all_posts_user_comments());
+                                        echo $count_comment= count_records(get_all_user_approved_comments());
                                         ?>
                                     </div>
                                     <div>Comments</div>
@@ -109,16 +109,16 @@
             <!-- /.row -->
 
             <?php
-
             $count_post_pub = count_records(get_all_user_published_posts());
             $count_post_draft = count_records(get_all_user_draft_posts());
-            $count_comment_unapproved = statusCount('comments','comment_status','unapproved');
+            $count_comment_unapproved =count_records(get_all_user_unapproved_comments());
             $count_user_subs = statusCount('users','user_role','subscriber');
             ?>
 
             <?php
-            $elements_count = [$count_posts, $count_post_pub, $count_post_draft, $count_categories , $count_comment, $count_comment_unapproved];
             $elements_text = ['All Posts', 'Published Posts', 'Draft Posts', 'Categories', 'Comments', 'Unapproved Comments'];
+
+            $elements_count = [$count_posts, $count_post_pub, $count_post_draft, $count_categories , $count_comment, $count_comment_unapproved];
             ?>
             <div class="row">
                 <script type="text/javascript">
