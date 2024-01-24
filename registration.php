@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
+
+
     $error = [
         'username' => '',
         'email' => '',
@@ -37,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     if (emailExists($email)) {
         $error['email'] = "email exists pick another one <h3><a href='./index.php'>Login Instead👤</a></h3>";
-       
     }
     if (usernameExists($user)) {
         $error['username'] = 'username already exists';
@@ -61,12 +62,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 
-
-
 ?>
 
 <!-- Page Content -->
 <div class="container">
+
+    <form action="" method="get">
+        <select class="select" name="lang" id="">
+            <option>SELECT</option>
+            <option value="en">English</option>
+            <option value="he">Hebrew</option>
+        </select>
+    </form>
+
 
     <section id="login">
         <div class="container">
@@ -107,3 +115,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
     <?php include "includes/footer.php"; ?>
+
+    <script>
+        const select = document.querySelector('.select');
+        select.addEventListener('change',
+            function(e) {
+                e.preventDefault();
+                const data = e.target.value;
+               console.log(data);
+        
+            });
+    </script>
