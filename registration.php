@@ -7,6 +7,21 @@
 
 <?php
 
+if (isset($_GET['lang']) && !empty($_GET['lang'])) {
+    $_SESSION['lang'] = $_GET['lang'];
+
+    if (isset($_SESSOION['lang']) && $_SESSOION['lang'] !== $_GET['lang']) {
+
+        echo "<script>location.reload()</script>";
+    }
+}
+
+if (isset($_SESSION['lang'])) {
+    include "includes/languages/" . $_SESSION['lang'] . ".php";
+} else {
+    include "includes/languages/en.php";
+}
+
 // if (isset($_POST['submit'])) {
 //?if the method is post then do the next action
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -67,11 +82,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <!-- Page Content -->
 <div class="container">
 
-    <form action="" method="get">
-        <select class="select" name="lang" id="">
+    <form action="" method="get" id="lang_form">
+        <select onchange="changeLanguage()" class="select" name="lang" >
             <option>SELECT</option>
-            <option value="en">English</option>
-            <option value="he">Hebrew</option>
+            <option value="en" <?php if (isset($_SESSION['lang']) && $_SESSION['lang'] == 'en') {
+                                    echo "selected";
+                                } ?>>English</option>
+            <option value="he" <?php if (isset($_SESSION['lang']) && $_SESSION['lang'] == 'he') {
+                                    echo "selected";
+                                } ?>>Hebrew</option>
         </select>
     </form>
 
@@ -81,21 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3">
                     <div class="form-wrap">
-                        <h1>Register</h1>
+                        <h1><?php echo _REGISTER; ?></h1>
                         <form role="form" action="" method="post" id="login-form" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="username" class="sr-only">username</label>
-                                <input type="text" value="<?php echo isset($user) ? $user : '' ?>" name="username" id="username" class="form-control" placeholder="Enter Desired Username" autocomplete="on">
+                                <input type="text" value="<?php echo isset($user) ? $user : '' ?>" name="username" id="username" class="form-control" placeholder="<?php echo _USERNAME; ?>" autocomplete="on">
                                 <p class="bg-danger text-center"><?php echo isset($error['username']) ?  $error['username'] : '' ?></p>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email</label>
-                                <input type="email" value="<?php echo isset($email) ? $email : '' ?>" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                                <input type="email" value="<?php echo isset($email) ? $email : '' ?>" name="email" id="email" class="form-control" placeholder="<?php echo _EMAIL; ?>">
                                 <p class="bg-danger text-center"><?php echo isset($error['email']) ? $error['email'] : '' ?></p>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="sr-only">Password</label>
-                                <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                                <input type="password" name="password" id="key" class="form-control" placeholder="<?php echo _PASSWORD; ?>">
                                 <p class="bg-danger text-center"><?php echo isset($error['password']) ? $error['password'] : '' ?></p>
                             </div>
 
@@ -117,12 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <?php include "includes/footer.php"; ?>
 
     <script>
-        const select = document.querySelector('.select');
-        select.addEventListener('change',
-            function(e) {
-                e.preventDefault();
-                const data = e.target.value;
-               console.log(data);
-        
+        function changeLanguage() {
+            document.getElementById('lang_form').addEventListener('submit', function(e) {
+                console.log("it works");
             });
+        }
     </script>
