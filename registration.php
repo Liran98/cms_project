@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <form action="" method="get" id="lang_form">
         <select onchange="changeLanguage()" class="select" name="lang" >
-            <option>SELECT</option>
+          
             <option value="en" <?php if (isset($_SESSION['lang']) && $_SESSION['lang'] == 'en') {
                                     echo "selected";
                                 } ?>>English</option>
@@ -138,8 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <script>
         function changeLanguage() {
-            document.getElementById('lang_form').addEventListener('submit', function(e) {
-                console.log("it works");
-            });
+            document.getElementById('lang_form').submit();
         }
     </script>
