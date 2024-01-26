@@ -8,6 +8,7 @@
 <?php
 
 if (isset($_GET['lang']) && !empty($_GET['lang'])) {
+
     $_SESSION['lang'] = $_GET['lang'];
 
     if (isset($_SESSOION['lang']) && $_SESSOION['lang'] !== $_GET['lang']) {
@@ -17,7 +18,7 @@ if (isset($_GET['lang']) && !empty($_GET['lang'])) {
 }
 
 if (isset($_SESSION['lang'])) {
-    include "includes/languages/" . $_SESSION['lang'] . ".php";
+    include "includes/languages/".$_SESSION['lang'].".php";
 } else {
     include "includes/languages/en.php";
 }
