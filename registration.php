@@ -15,10 +15,12 @@ if (isset($_GET['lang']) && !empty($_GET['lang'])) {
 
         echo "<script>location.reload()</script>";
     }
+} else {
+    echo "select a language ";
 }
 
 if (isset($_SESSION['lang'])) {
-    include "includes/languages/".$_SESSION['lang'].".php";
+    include "includes/languages/" . $_SESSION['lang'] . ".php";
 } else {
     include "includes/languages/en.php";
 }
@@ -84,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <div class="container">
 
     <form action="" method="get" id="lang_form">
-        <select onchange="changeLanguage()" class="select" name="lang" >
-          
+        <select onchange="changeLanguage()" class="select" name="lang">
+
             <option value="en" <?php if (isset($_SESSION['lang']) && $_SESSION['lang'] == 'en') {
                                     echo "selected";
                                 } ?>>English</option>
