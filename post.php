@@ -224,6 +224,10 @@
                     $query_post = "SELECT * FROM posts WHERE post_id =$id";
                     $res = mysqli_query($conn, $query_post);
 
+                    if(!$res){
+                        die(mysqli_error($conn));
+                    }
+
                     $row = mysqli_fetch_array($res);
                     $likes = $row['post_likes'];
 
