@@ -321,7 +321,7 @@ function find_all_categories()
         {
             global $conn;
             $uname = $_SESSION['username'];
-            $query ="SELECT * FROM posts INNER JOIN comments On posts.post_id = comments.comment_post_id";
+            $query = "SELECT * FROM posts INNER JOIN comments On posts.post_id = comments.comment_post_id";
             $query .= " WHERE comments.comment_status = 'unapproved' AND posts.post_user = '$uname'";
             $query = mysqli_query($conn, $query);
             confirmQuery($query);
@@ -331,13 +331,13 @@ function find_all_categories()
         {
             global $conn;
             $uname = $_SESSION['username'];
-            $query ="SELECT * FROM posts INNER JOIN comments On posts.post_id = comments.comment_post_id";
+            $query = "SELECT * FROM posts INNER JOIN comments On posts.post_id = comments.comment_post_id";
             $query .= " WHERE comments.comment_status = 'approved' AND posts.post_user = '$uname'";
             $query = mysqli_query($conn, $query);
             confirmQuery($query);
             return $query;
         }
-       
+
 
         function count_records($res)
         {
@@ -423,22 +423,27 @@ function find_all_categories()
 
         function loggedInUserId()
         {
+            global $conn;
             //if true
             if (isLoggedin()) {
                 $user = $_SESSION['username'];
-                $result = query("SELECT * FROM users WHERE user_name ='$user'");
-                confirmQuery($result);
+                $result = mysqli_query($conn,"SELECT * FROM users WHERE user_name ='$user'");
+                if(!$result){
+                    die(mysqli_error($conn));
+                }
                 $row = mysqli_fetch_assoc($result);
                 $curUserId = $row['user_id'];
-
-                return mysqli_num_rows($result) >= 1 ? $curUserId : false;
+                if (mysqli_num_rows($result) >= 1) {
+                    return  $curUserId;
+                }
             }
             return false;
         }
 
         function userLikedPost($post_id = '')
         {
-            $res =  query("SELECT * FROM likes WHERE user_id=" . loggedInUserId() . " AND post_id = $post_id");
+            $user = loggedInUserId();
+            $res =  query("SELECT * FROM likes WHERE user_id=$user AND post_id=$post_id");
             confirmQuery($res);
             return mysqli_num_rows($res) >= 1 ? true : false;
         }

@@ -163,18 +163,6 @@
 
                         <!-- Comment -->
                         <div class="media">
-                            <?php
-                            // if (isset($author)) {
-                            //     $query_user = "SELECT * FROM users WHERE user_name = '$author'";
-                            //     $res_user = mysqli_query($conn, $query_user);
-                            //     if (!$res_user) {
-                            //         die(mysqli_error($conn));
-                            //     }
-                            //     while ($user_row = mysqli_fetch_assoc($res_user)) {
-                            //         $img = $user_row['user_image'];
-                            //     }
-                            // }
-                            ?>
                             <a class="pull-left" href="#">
                                 <img width="50" class="media-object" src="./images/<?php echo $img; ?>" alt="">
                             </a>
@@ -195,24 +183,30 @@
                 <?php
                 //name liked from ajax
                 if (isset($_POST['liked'])) {
-                    $user_id = $_POST['uid'];
-                    $post_id = $_POST['pid'];
+
+                    $uid = $_POST['uid'];
+                    $pid = $_POST['pid'];
                     //FETCHING POST
-                    $query_post = "SELECT * FROM posts WHERE post_id =$id";
-                    $res = mysqli_query($conn, $query_post);
+                    $query_post = "SELECT * FROM posts WHERE post_id =$pid";
+                    $res = mysqli_query($conn, $query);
 
                     if (!$res) {
                         die(mysqli_error($conn));
                     }
 
-                    $row = mysqli_fetch_array($res);
+                    $row = mysqli_fetch_assoc($res);
                     $likes = $row['post_likes'];
                     //UPDATE POST WITH LIKES
-                    mysqli_query($conn, "UPDATE posts SET post_likes = $likes + 1 WHERE post_id =$id");
-
+                    $res_update = mysqli_query($conn, "UPDATE posts SET post_likes=$likes + 1 WHERE post_id =$pid");
+                    if (!$res_update) {
+                        die(mysqli_error($conn));
+                    }
                     //CREATE LIKES FOR POST
 
-                    mysqli_query($conn, "INSERT INTO likes(user_id,post_id) VALUES($user_id,$id)");
+                    $res_inser = mysqli_query($conn, "INSERT INTO likes(user_id, post_id) VALUES($uid, $pid)");
+                    if (!$res_inser) {
+                        die(mysqli_error($conn));
+                    }
                     exit();
                 }
 
@@ -221,10 +215,10 @@
                     $user_id = $_POST['uid'];
                     $post_id = $_POST['pid'];
                     //1 fetching likes
-                    $query_post = "SELECT * FROM posts WHERE post_id =$id";
+                    $query_post = "SELECT * FROM posts WHERE post_id =$post_id";
                     $res = mysqli_query($conn, $query_post);
 
-                    if(!$res){
+                    if (!$res) {
                         die(mysqli_error($conn));
                     }
 
@@ -232,30 +226,38 @@
                     $likes = $row['post_likes'];
 
                     //2 deleting likes
-                    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$id AND user_id= $user_id");
+                    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$post_id AND user_id= $user_id");
 
 
                     //3 updating likes
-                    mysqli_query($conn, "UPDATE posts SET post_likes = $likes - 1 WHERE post_id =$id");
+                    mysqli_query($conn, "UPDATE posts SET post_likes=$likes-1 WHERE post_id =$post_id");
 
                     exit();
                 }
                 ?>
-                <?php if (isLoggedin()) : ?>
+                <?php if (isLoggedin()) { ?>
 
                     <div class="row">
                         <p class="pull-right">
-
-                            <a href=""
-                             data-toggle="tooltip" data-placement="right" title="<?php echo userLikedPost($post_id) ? 'i liked this before' : 'you can like this post' ?>"
-                             class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?>">
+                            <a href="" data-toggle="tooltip" data-placement="right" title="<?php echo userLikedPost($post_id) ? 'i liked this before' : 'you can like this post' ?>" class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like' ?>">
                                 <span class="<?php echo userLikedPost($post_id) ? 'glyphicon glyphicon-thumbs-down' : 'glyphicon glyphicon-thumbs-up' ?>">
                                 </span>
                                 <?php echo userLikedPost($post_id) ? 'Dislike' : 'Like'; ?>
-                                
+
                             </a>
                         </p>
                     </div>
+
+                    <div class="row">
+                        <p class="pull-right">
+
+                            Likes : <?php
+                                    echo getPostLikes($post_id);
+                                    ?>
+                        </p>
+                    </div>
+                <?php } else {  ?>
+
                     <div class="row">
                         <p class="pull-right">
 
@@ -264,22 +266,13 @@
                                     ?>
                         </p>
                     </div>
-                <?php else : ?>
-                   
-                    <div class="row">
-                        <p class="pull-right">
 
-                            Likes : <?php
-                                    echo getPostLikes($id);
-                                    ?>
-                        </p>
-                    </div>
-
-                    <a  class="text-center" href="/CMS_TEMPLATE/login">
+                    <a class="text-center" href="/CMS_TEMPLATE/login">
                         You need to <strong>login</strong> to like
                         the post 👤
                     </a>
-                <?php endif; ?>
+                <?php }
+                ?>
                 <div class="clearfix"></div>
         </div>
     </div>
@@ -289,38 +282,35 @@
                 header("Location: index.php");
             }
 ?>
-<?php include './includes/footer.php'; ?>
+
 
 <script>
     //close the php with ; otherwise wont work  
     let post_id = <?php echo $id; ?>;
     let user_id = <?php echo loggedInUserId(); ?>;
+
     $(document).ready(function() {
-
-$(['data-target' = 'tooltip']).tooltip();
-
-
-        $('.like').click(function(e) {
-            console.log("clicked");
+        // $("[data-target = 'tooltip']").tooltip();
+        $('.like').click(function() {
             $.ajax({
                 url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
                 type: 'post',
                 data: {
-                    liked: 1,
-                    pid: post_id,
-                    uid: user_id, //hardcoded user
+                    'liked': 1,
+                    'pid': post_id,
+                    'uid': user_id, //hardcoded user
                 }
             });
         });
 
-        $('.dislike').click(function(e) {
+        $('.dislike').click(function() {
             $.ajax({
                 url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
                 type: "post",
                 data: {
-                    unliked: 1,
-                    pid: post_id,
-                    uid: user_id,
+                    'unliked': 1,
+                    'pid': post_id,
+                    'uid': user_id,
                 }
             })
         });
@@ -328,3 +318,5 @@ $(['data-target' = 'tooltip']).tooltip();
 </script>
 
 <!-- // mysqli_stmt_free_result($stmt); -->
+
+<?php include './includes/footer.php'; ?>
