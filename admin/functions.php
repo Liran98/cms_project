@@ -427,15 +427,16 @@ function find_all_categories()
             //if true
             if (isLoggedin()) {
                 $user = $_SESSION['username'];
-                $result = mysqli_query($conn,"SELECT * FROM users WHERE user_name ='$user'");
-                if(!$result){
+                $result = mysqli_query($conn, "SELECT * FROM users WHERE user_name ='$user'");
+                if (!$result) {
                     die(mysqli_error($conn));
                 }
-                $row = mysqli_fetch_assoc($result);
-                $curUserId = $row['user_id'];
-                if (mysqli_num_rows($result) >= 1) {
-                    return  $curUserId;
-                }
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $curUserId = $row['user_id'];
+                    if (mysqli_num_rows($result) >= 1) {
+                        return  $curUserId;
+                    }
+                };
             }
             return false;
         }

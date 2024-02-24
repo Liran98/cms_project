@@ -180,67 +180,15 @@
                     }
                 }
                 ?>
-                <?php
-                //name liked from ajax
-                if (isset($_POST['liked'])) {
 
-                    $uid = $_POST['uid'];
-                    $pid = $_POST['pid'];
-                    //FETCHING POST
-                    $query_post = "SELECT * FROM posts WHERE post_id =$pid";
-                    $res = mysqli_query($conn, $query);
-
-                    if (!$res) {
-                        die(mysqli_error($conn));
-                    }
-
-                    $row = mysqli_fetch_assoc($res);
-                    $likes = $row['post_likes'];
-                    //UPDATE POST WITH LIKES
-                    $res_update = mysqli_query($conn, "UPDATE posts SET post_likes=$likes + 1 WHERE post_id =$pid");
-                    if (!$res_update) {
-                        die(mysqli_error($conn));
-                    }
-                    //CREATE LIKES FOR POST
-
-                    $res_inser = mysqli_query($conn, "INSERT INTO likes(user_id, post_id) VALUES($uid, $pid)");
-                    if (!$res_inser) {
-                        die(mysqli_error($conn));
-                    }
-                    exit();
-                }
-
-
-                if (isset($_POST['unliked'])) {
-                    $user_id = $_POST['uid'];
-                    $post_id = $_POST['pid'];
-                    //1 fetching likes
-                    $query_post = "SELECT * FROM posts WHERE post_id =$post_id";
-                    $res = mysqli_query($conn, $query_post);
-
-                    if (!$res) {
-                        die(mysqli_error($conn));
-                    }
-
-                    $row = mysqli_fetch_array($res);
-                    $likes = $row['post_likes'];
-
-                    //2 deleting likes
-                    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$post_id AND user_id= $user_id");
-
-
-                    //3 updating likes
-                    mysqli_query($conn, "UPDATE posts SET post_likes=$likes-1 WHERE post_id =$post_id");
-
-                    exit();
-                }
-                ?>
                 <?php if (isLoggedin()) { ?>
 
                     <div class="row">
                         <p class="pull-right">
-                            <a href="" data-toggle="tooltip" data-placement="right" title="<?php echo userLikedPost($post_id) ? 'i liked this before' : 'you can like this post' ?>" class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like' ?>">
-                                <span class="<?php echo userLikedPost($post_id) ? 'glyphicon glyphicon-thumbs-down' : 'glyphicon glyphicon-thumbs-up' ?>">
+                            <a href="" data-toggle="tooltip" data-placement="right" title="<?php echo userLikedPost($post_id) ? 'i liked this before' : 'you can like this post'; ?>" class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?>">
+                                <span class="<?php echo userLikedPost($post_id)
+                                                    ? 'glyphicon glyphicon-thumbs-down'
+                                                    : 'glyphicon glyphicon-thumbs-up' ?>">
                                 </span>
                                 <?php echo userLikedPost($post_id) ? 'Dislike' : 'Like'; ?>
 
@@ -278,23 +226,83 @@
     </div>
 </div>
 <?php
+                // if isset($_GET['p_id]){}    
             } else {
                 header("Location: index.php");
             }
 ?>
+<?php
+//name liked from ajax
+if (isset($_POST['liked'])) {
 
+    $uid = $_POST['uid'];
+    $pid = $_POST['pid'];
+
+    echo $pid;
+    echo $uid;
+    //FETCHING POST
+    $query_post = "SELECT * FROM posts WHERE post_id =$pid";
+    $res = mysqli_query($conn, $query);
+
+    if (!$res) {
+        die(mysqli_error($conn));
+    }
+
+    $row = mysqli_fetch_assoc($res);
+    $likes = $row['post_likes'];
+    //UPDATE POST WITH LIKES
+    $res_update = mysqli_query($conn, "UPDATE posts SET post_likes=$likes + 1 WHERE post_id =$pid");
+    if (!$res_update) {
+        die(mysqli_error($conn));
+    }
+    //CREATE LIKES FOR POST
+
+    $res_inser = mysqli_query($conn, "INSERT INTO likes(user_id, post_id) VALUES($uid, $pid)");
+    if (!$res_inser) {
+        die(mysqli_error($conn));
+    }
+    exit();
+}
+
+
+if (isset($_POST['unliked'])) {
+    $user_id = $_POST['uid'];
+    $post_id = $_POST['pid'];
+    //1 fetching likes
+    $query_post = "SELECT * FROM posts WHERE post_id =$post_id";
+    $res = mysqli_query($conn, $query_post);
+
+    if (!$res) {
+        die(mysqli_error($conn));
+    }
+
+    $row = mysqli_fetch_array($res);
+    $likes = $row['post_likes'];
+
+    //2 deleting likes
+    mysqli_query($conn, "DELETE FROM likes WHERE post_id =$post_id AND user_id= $user_id");
+
+
+    //3 updating likes
+    mysqli_query($conn, "UPDATE posts SET post_likes=$likes-1 WHERE post_id =$post_id");
+
+    exit();
+}
+?>
 
 <script>
     //close the php with ; otherwise wont work  
-    let post_id = <?php echo $id; ?>;
-    let user_id = <?php echo loggedInUserId(); ?>;
+
 
     $(document).ready(function() {
-        // $("[data-target = 'tooltip']").tooltip();
-        $('.like').click(function() {
+        let user_id = <?php echo loggedInUserId(); ?>;
+        let post_id = <?php echo $id; ?>;
+
+        $("[data-target = 'tooltip']").tooltip();
+        $('.like').click(function(e) {
             $.ajax({
                 url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
-                type: 'post',
+                type: "post",
                 data: {
                     'liked': 1,
                     'pid': post_id,
@@ -303,7 +311,7 @@
             });
         });
 
-        $('.dislike').click(function() {
+        $('.dislike').click(function(e) {
             $.ajax({
                 url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
                 type: "post",
