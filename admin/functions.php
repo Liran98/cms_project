@@ -229,8 +229,6 @@ function find_all_categories()
                         $session = $row['session'];
                     };
 
-
-
                     $count_online = mysqli_num_rows($users_online_query);
                     echo $count_online;
                 }
