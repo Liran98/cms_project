@@ -17,7 +17,7 @@ require './classes/Config.php';
 
 
 if (!ifItIsMethod('get') && !isset($_GET['forgot'])) {
-    redirect('index');
+    redirect('index.php');
 }
 
 
@@ -74,9 +74,9 @@ if (ifItIsMethod('post')) {
             }
 
 
-            echo "<p class='bg-success text-center'>it does exists</p>";
+            echo "<p class='bg-success text-center'>Email exists</p>";
         } else {
-            echo "<p class='bg-danger text-center'>it does not exists</p>";
+            echo "<p class='bg-danger text-center'>Email does not exists</p>";
             // mysqli_stmt_error($stmt)
         }
     }

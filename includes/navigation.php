@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/CMS_TEMPLATE/index">🏠</a>
+            <a class="navbar-brand" href="index.php">🏠</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -46,22 +46,22 @@
                         $contact_class = 'active';
                     }
 
-                    echo "<li class='$category_class'><a href='/CMS_TEMPLATE/category/$cat_id'>{$cat_title}</a></li>";
+                    echo "<li class='$category_class'><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                 }
                 ?>
 
-                <?php if(isLoggedin()): ?>
+                <?php if (isLoggedin()) : ?>
 
                     <li>
-                        <a href="/CMS_TEMPLATE/admin">ADMIN</a>
+                        <a href="admin">ADMIN</a>
                     </li>
                     <li>
-                        <a href="/CMS_TEMPLATE/admin/includes/logout.php">Logout</a>
+                        <a href="admin/includes/logout.php">Logout</a>
                     </li>
 
-                    <?php else: ?>
+                <?php else : ?>
                     <li>
-                        <a href="/CMS_TEMPLATE/login">Login</a>
+                        <a href="login.php">Login</a>
                     </li>
 
                 <?php endif; ?>
@@ -79,18 +79,17 @@
 
                     if (isset($_GET['p_id'])) {
                         $post_id = $_GET['p_id'];
-                        echo  "<li><a href='/CMS_TEMPLATE/admin/posts.php?source=edit_post&p_id=$post_id'>Edit Post</a></li>";
+                        echo  "<li><a href='admin/posts.php?source=edit_post&p_id=$post_id'>Edit Post</a></li>";
                     }
                 }
 
                 if (!isset($_SESSION['username'])) {
-                    echo  "<li class='$registration_class'><a href='/CMS_TEMPLATE/registration'>Register</a></li>";
+                    echo  "<li class=''><a href='registration.php'>Register</a></li>";
                 }
-
 
                 ?>
 
-                <li class="<?php echo $contact_class; ?>"><a href='/CMS_TEMPLATE/contact'>Contact</a></li>
+                <li class="<?php echo $contact_class; ?>"><a href='contact.php'>Contact</a></li>
 
 
 

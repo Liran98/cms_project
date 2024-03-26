@@ -17,7 +17,7 @@ if (ifItIsMethod('post')) {
         if (isset($username) && isset($password)) {
             login_user($username, $password);
         } else {
-            redirect('/CMS_TEMPLATE/index');
+            redirect('index.php');
         }
         $id = uniqid();
 

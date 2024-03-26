@@ -5,7 +5,7 @@
 
 <?php
 
-checkIfUserIsLoggedInANDredirect('/CMS_TEMPLATE/admin');
+checkIfUserIsLoggedInANDredirect('admin');
 $error = [
 	'user' => '',
 	'pass' => ''
@@ -56,7 +56,7 @@ if (ifItIsMethod('post')) {
 							<div class="panel-body">
 
 
-								<form action="/CMS_TEMPLATE/login" id="login-form" role="form" autocomplete="off" class="form" method="post">
+								<form action="login.php" id="login-form" role="form" autocomplete="off" class="form" method="post">
 
 									<div class="form-group">
 										<div class="input-group">

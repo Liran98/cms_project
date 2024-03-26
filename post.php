@@ -106,7 +106,7 @@
 
                             // $query_comment = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $id";
                             // $res_comment = mysqli_query($conn, $query_comment);
-                            redirect('/CMS_TEMPLATE/post/' . $id);
+                            redirect('post.php?p_id=' . $id);
                         }
                     }
                     ?>
@@ -215,7 +215,7 @@
                         </p>
                     </div>
 
-                    <a class="text-center" href="/CMS_TEMPLATE/login">
+                    <a class="text-center" href="login.php">
                         You need to <strong>login</strong> to like
                         the post 👤
                     </a>
@@ -301,7 +301,7 @@ if (isset($_POST['unliked'])) {
         $("[data-target = 'tooltip']").tooltip();
         $('.like').click(function(e) {
             $.ajax({
-                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
+                url: "post.php?p_id=<?php echo $id; ?>",
                 type: "post",
                 data: {
                     'liked': 1,
@@ -313,7 +313,7 @@ if (isset($_POST['unliked'])) {
 
         $('.dislike').click(function(e) {
             $.ajax({
-                url: "/CMS_TEMPLATE/post.php?p_id=<?php echo $id; ?>",
+                url: "post.php?p_id=<?php echo $id; ?>",
                 type: "post",
                 data: {
                     'unliked': 1,

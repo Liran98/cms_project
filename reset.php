@@ -27,7 +27,7 @@ mysqli_stmt_close($stmt);
 
 
 if (!isset($_GET['token']) && !isset($_GET['email'])) {
-    redirect('index');
+    redirect('index.php');
 }
 
 
@@ -50,7 +50,7 @@ if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
             if (mysqli_stmt_affected_rows($stmt) >= 1) {
 
-                redirect('/CMS_TEMPLATE/login');
+                redirect('login.php');
             }
 
             mysqli_stmt_close($stmt);

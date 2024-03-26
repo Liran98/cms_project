@@ -6,9 +6,9 @@ class Config
 
     const SMTP_PORT = 2525;
 
-    const SMTP_USER = '5a71995e4dd8c5';
+    const SMTP_USER = '9d85261c0a2096';
 
-    const SMTP_PASSWORD = '26e5cfabdf4d57';
+    const SMTP_PASSWORD = '42902565944de7';
 }
 
 ?>

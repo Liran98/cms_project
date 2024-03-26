@@ -520,7 +520,7 @@ function find_all_categories()
                     $_SESSION['role'] = $role;
                     $_SESSION['id'] = $id;
 
-                    redirect("/CMS_TEMPLATE/admin");
+                    redirect("admin");
                 } else {
                     return false;
                 }
